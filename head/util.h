@@ -1,1 +1,0 @@
-char* argument(int nb);
