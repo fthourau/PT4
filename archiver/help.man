@@ -1,0 +1,9 @@
+NAME
+		tar - Personal version of the tar archiving utility
+
+SYNOPSIS
+		tar [-] c --create | d --delete | f | h | m --compare | r | --sparse |
+			t --list | u --update | v --verbose | x --extract | z [options]
+			[pathname ...]
+
+DESCRIPTION
