@@ -19,9 +19,10 @@ int main(int argc, char** argv) {
 		fprintf(stderr, "Argument manquant: <filename>\n");
 
 	if(archive != NULL) {
+		//fclose(archive);
+		extract_files_from_archive(archive);
+		//archive_reader(archive);
 		fclose(archive);
-		//archive_reader(argv[1]);
-		extract_files_from_archive(argv[1]);
 	}
 	else
 		fprintf(stderr, "Invalid file: %s\n", argv[1]);

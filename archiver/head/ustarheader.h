@@ -18,7 +18,8 @@
 #define DEVMAJOR_S 8
 #define DEVMINOR_S 8
 #define PREFIX_S 155
-#define HEADER_S 500
+#define STUFFING_S 12
+#define HEADER_S 512
 
 // STRUCTURE OF A FILE'S HEADER IN *.TAR ARCHIVE
 typedef struct FILE_HEADER {
@@ -28,7 +29,7 @@ typedef struct FILE_HEADER {
 	char gid[GID_S];				// Group IDentifier
 	char size[SIZE_S];				// Lengh of file contents
 	char atime[ATIME_S];			// Last access time - Not in the header
-	char* mtime;					// Last modification time
+	//char* mtime;					// Last modification time
 	char cksum[CKSUM_S];			// File and header checksum
 	char typeflag[TYPEFLAG_S];		// Type of the file
 	char linkname[LINKNAME_S];		// Name uses for the link
@@ -39,9 +40,11 @@ typedef struct FILE_HEADER {
 	char devmajor[DEVMAJOR_S];		// DEVice MAJOR number
 	char devminor[DEVMINOR_S];		// DEVice MINOR number
 	char prefix[PREFIX_S];			// Used to create file's path if non-null
+	char stuffing[STUFFING_S];		// Stuffing bytes
 } FILE_HEADER;
 
 // SOME UTILITARIAN FUNCTIONS
 void printf_header(FILE_HEADER fh);
+int header_is_empty(fh);
 
 #endif

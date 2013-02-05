@@ -1,13 +1,17 @@
-#include "../head/archive.h"
-#include "../head/ustarheader.h"
-#include "../head/utilitarian.h"
-
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include <time.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/unistd.h>
+#include <fcntl.h>
+
+#include "../head/archive.h"
+#include "../head/ustarheader.h"
+#include "../head/utilitarian.h"
+
+#define BLOC_SIZE 512
 
 int get_file_weight(FILE* file) {
 	fseek(file, 0, SEEK_END);
@@ -17,16 +21,13 @@ int get_file_weight(FILE* file) {
 	return t;
 }
 
-void construct_ustar_header(FILE_HEADER* fh, struct stat buf, FILE* file) {
-	//int stats = stat("archive.tar", &buf);
-
+void construct_ustar_header(FILE_HEADER* fh, FILE* file) {
 	fread(fh->name, NAME_S, 1, file);
 	fread(fh->mode, MODE_S, 1, file);
 	fread(fh->uid, UID_S, 1, file);
 	fread(fh->gid, GID_S, 1, file);
 	fread(fh->size, SIZE_S, 1, file);
 	fread(fh->atime, ATIME_S, 1, file);
-	//fh->mtime = ctime(&buf.st_mtime);
 	fread(fh->cksum, CKSUM_S, 1, file);
 	fread(fh->typeflag, TYPEFLAG_S, 1, file);
 	fread(fh->linkname, LINKNAME_S, 1, file);
@@ -37,62 +38,58 @@ void construct_ustar_header(FILE_HEADER* fh, struct stat buf, FILE* file) {
 	fread(fh->devmajor, DEVMAJOR_S, 1, file);
 	fread(fh->devminor, DEVMINOR_S, 1, file);
 	fread(fh->prefix, PREFIX_S, 1, file);
+	fread(fh->stuffing, STUFFING_S, 1, file);
 }
 
-void extract_file(char* filename, unsigned int size, FILE* archive) {
-	// Output file from the archive
-	FILE* file = fopen(filename, "w+");
-
-	if(file != NULL) {
-		// Buffer of file's content
-		char* content = malloc(size);
-		
-		// Get the content from the archive
-		fread(content, size, 1, archive);
-
-		// Fill up the output file from the buffer
-		fwrite(content, size, 1, file);
-		
-		// Release buffer and close output file
-		free(content);
-		content = NULL;
-		fclose(file);
-		file = NULL;
-	}
-	else
-		fprintf(stderr, "Impossible d'extraire le fichier %s\n", filename);
-}
-
-void extract_files_from_archive(char* filename) {
-	FILE* archive = fopen(filename, "r");
+void extract_files_from_archive(FILE * archive) {
 	struct stat buf;
 	FILE_HEADER fh;
-	unsigned int archive_size = get_file_weight(archive);
+	int i;
+	int it;
+	bool end_of_archive = false;
 
-	while(archive_size != 0) {
-		// Demander pourquoi devoir ajouter 12 au poids du fichier
-		printf("archive_size: %d\n", archive_size);
+	construct_ustar_header(&fh, archive);
 
-		// USTAR header and stat
-		construct_ustar_header(&fh, buf, archive);
+	do {
+		if(fh.name != NULL && fh.name[0] != 0) {
+			// Get size and create output file
+			size_t filesize = oct2dec(fh.size);
+			FILE* output_file = fopen(fh.name, "w+");
 
-		// Size of file to extract
-		size_t filesize = oct2dec(fh.size) + 12;
+			if(output_file != NULL) {
+				i = 0;
+				it = filesize / BLOC_SIZE;
 
-		// Extract the file
-		extract_file(fh.name, filesize, archive);
+				if(it >= 0 && (filesize % BLOC_SIZE) > 0)
+					it++;
 
-		// Adjust remaining archive size
-		archive_size -= (HEADER_S + filesize);
-	}
+				// Get the content from the archive
+				while(i < (HEADER_S * it)) {
+					if(i >= filesize)
+						fgetc(archive);
+					else
+						fputc(fgetc(archive), output_file);
+					
+					i++;
+				}
+
+				fclose(output_file);
+				output_file = NULL;
+			}
+			else
+				fprintf(stderr, "Impossible d'extraire le fichier %s\n", fh.name);
+
+			construct_ustar_header(&fh, archive);
+		}
+		else
+			end_of_archive = true;
+	} while(!end_of_archive);
 }
 
-void archive_reader(char* filename) {
+void archive_reader(FILE * archive) {
 	struct stat buf;
 	FILE_HEADER fh;
-	FILE *archive = fopen(filename, "r");
 
-	construct_ustar_header(&fh, buf, archive);
+	construct_ustar_header(&fh, archive);
 	printf_header(fh);
-	fclose(archive);
 }
