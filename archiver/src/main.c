@@ -11,8 +11,6 @@
 #include "../head/archive.h"
 
 int main(int argc, char** argv) {
-	struct stat buf;
-	FILE_HEADER fh;
 	FILE* archive = NULL;
 
 	if(argc > 1)
@@ -22,7 +20,8 @@ int main(int argc, char** argv) {
 
 	if(archive != NULL) {
 		fclose(archive);
-		archive_reader(argv[1]);
+		//archive_reader(argv[1]);
+		extract_files_from_archive(argv[1]);
 	}
 	else
 		fprintf(stderr, "Invalid file: %s\n", argv[1]);
