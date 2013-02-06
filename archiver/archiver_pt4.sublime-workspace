@@ -1,0 +1,1080 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"fil",
+				"filesize"
+			],
+			[
+				"out",
+				"output_file"
+			],
+			[
+				"de",
+				"devmajor"
+			],
+			[
+				"file",
+				"filesize"
+			],
+			[
+				"ar",
+				"archive"
+			],
+			[
+				"arch",
+				"archive_size"
+			],
+			[
+				"arc",
+				"archive_size"
+			],
+			[
+				"a",
+				"archive_size"
+			],
+			[
+				"f",
+				"f"
+			],
+			[
+				"FILE",
+				"FILE"
+			],
+			[
+				"fi",
+				"filename"
+			],
+			[
+				"FI",
+				"FILE"
+			],
+			[
+				"OB",
+				"OBJ_DIR"
+			],
+			[
+				"re",
+				"result"
+			],
+			[
+				"m",
+				"mtime"
+			],
+			[
+				"dev",
+				"devminor"
+			],
+			[
+				"n",
+				"name"
+			],
+			[
+				"ma",
+				"magic"
+			],
+			[
+				"li",
+				"linear"
+			],
+			[
+				"ech",
+				"echo	echo \"…\""
+			],
+			[
+				"margin",
+				"margin-bottom"
+			],
+			[
+				"border",
+				"border-color"
+			],
+			[
+				"Code",
+				"Code_Orchestre"
+			],
+			[
+				"Co",
+				"Code_Oeuvre"
+			],
+			[
+				"Com",
+				"Composer"
+			],
+			[
+				"Comp",
+				"Composition"
+			],
+			[
+				"Compo",
+				"Composition_Oeuvre"
+			],
+			[
+				"Type",
+				"Type_Morceau"
+			],
+			[
+				"utf",
+				"utf8_decode"
+			],
+			[
+				"Cod",
+				"Code_Composition"
+			],
+			[
+				"ht",
+				"htmlspecialchars"
+			],
+			[
+				"html",
+				"htmlentities"
+			],
+			[
+				"s",
+				"s"
+			],
+			[
+				"di",
+				"disc"
+			],
+			[
+				"mem",
+				"meme_disc"
+			],
+			[
+				"ut",
+				"utf8_encode"
+			],
+			[
+				"odbc_fet",
+				"odbc_fetch_row"
+			],
+			[
+				"odbc_e",
+				"odbc_exec"
+			],
+			[
+				"sess",
+				"session_start"
+			],
+			[
+				"margi",
+				"margin-right"
+			],
+			[
+				"str",
+				"string"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"mar",
+				"margin-right"
+			],
+			[
+				"pa",
+				"padding"
+			],
+			[
+				"marg",
+				"margin-bottom"
+			],
+			[
+				"wh",
+				"width"
+			],
+			[
+				"bac",
+				"background-image"
+			],
+			[
+				"bord",
+				"border-radius"
+			],
+			[
+				"inli",
+				"inline"
+			],
+			[
+				"st",
+				"str"
+			],
+			[
+				"si",
+				"sizeof"
+			],
+			[
+				"ba",
+				"base64_encode"
+			],
+			[
+				"Tit",
+				"Titre_Oeuvre"
+			],
+			[
+				"Qu",
+				"QUERY"
+			],
+			[
+				"id",
+				"identifiant"
+			],
+			[
+				"fou",
+				"fourchette"
+			],
+			[
+				"odbc_fec",
+				"odbc_fetch_row"
+			],
+			[
+				"odbc_n",
+				"odbc_num_rows"
+			],
+			[
+				"pr",
+				"printf"
+			],
+			[
+				"e",
+				"elseif	elseif …"
+			],
+			[
+				"strp",
+				"strpos"
+			],
+			[
+				"inlin",
+				"inline-block"
+			],
+			[
+				"padd",
+				"padding-left"
+			],
+			[
+				"paddi",
+				"padding-left"
+			],
+			[
+				"err",
+				"err_mnt"
+			],
+			[
+				"SU",
+				"SU_MOUNT"
+			],
+			[
+				"M",
+				"MOUNT_PT"
+			],
+			[
+				"se",
+				"serveur_xaser"
+			],
+			[
+				"mo",
+				"montage"
+			],
+			[
+				"get",
+				"getElementById"
+			],
+			[
+				"reu",
+				"requeteAjax"
+			],
+			[
+				"requ",
+				"requeteAjax"
+			],
+			[
+				"d",
+				"d"
+			],
+			[
+				"PAS",
+				"PASVstr"
+			],
+			[
+				"rec",
+				"recupAdressePASV"
+			],
+			[
+				"port",
+				"port2"
+			],
+			[
+				"por",
+				"portPASV"
+			],
+			[
+				"adr",
+				"adrComplete"
+			],
+			[
+				"add",
+				"addrPASV"
+			],
+			[
+				"no",
+				"nonTrouve"
+			],
+			[
+				"pass",
+				"password"
+			],
+			[
+				"fiel",
+				"fields"
+			],
+			[
+				"fie",
+				"fields"
+			],
+			[
+				"field",
+				"field"
+			],
+			[
+				"for",
+				"for	for (…) {…}"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "src/archive.c",
+			"settings":
+			{
+				"buffer_size": 2156,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/ustarheader.c",
+			"settings":
+			{
+				"buffer_size": 1295,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/main.c",
+			"settings":
+			{
+				"buffer_size": 632,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/utilitarian.c",
+			"settings":
+			{
+				"buffer_size": 811,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/options.c",
+			"settings":
+			{
+				"buffer_size": 205,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "head/archive.h",
+			"settings":
+			{
+				"buffer_size": 173,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "head/ustarheader.h",
+			"settings":
+			{
+				"buffer_size": 1547,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "head/options.h",
+			"settings":
+			{
+				"buffer_size": 252,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "head/utilitarian.h",
+			"settings":
+			{
+				"buffer_size": 100,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "Packages/Makefile/Make.sublime-build",
+	"command_palette":
+	{
+		"height": 54.0,
+		"selected_items":
+		[
+			[
+				"Package Control: install Package",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Upgrade Package"
+			],
+			[
+				"Pac",
+				"Package Control: Install Package"
+			],
+			[
+				"low",
+				"Convert Case: Lower Case"
+			],
+			[
+				"upper",
+				"Convert Case: Upper Case"
+			],
+			[
+				"upp",
+				"Convert Case: Upper Case"
+			],
+			[
+				"lo",
+				"Convert Case: Lower Case"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 139.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/fthourau/.config/sublime-text-2/Packages/User/Default (Linux).sublime-keymap",
+		"/home/fthourau/.config/sublime-text-2/Packages/Default/Default (Linux).sublime-keymap",
+		"/home/fthourau/.config/sublime-text-2/Packages/User/C.sublime-settings",
+		"/home/fthourau/.config/sublime-text-2/Packages/User/makefile.sublime-build",
+		"/home/fthourau/.config/sublime-text-2/Packages/Default/Preferences.sublime-settings",
+		"/home/fthourau/.config/sublime-text-2/Packages/Package Control/Package Control.sublime-settings",
+		"/home/fthourau/.config/sublime-text-2/Packages/User/Package Control.sublime-settings",
+		"/home/fthourau/Dropbox/IUT (perso)/S4/PT/PT4/archiver/f3.txt",
+		"/home/fthourau/Dropbox/IUT (perso)/S4/PT/PT4/archiver/f2.txt",
+		"/home/fthourau/Dropbox/IUT (perso)/S4/PT/PT4/archiver/f1.txt",
+		"/home/fthourau/Dropbox/IUT (perso)/S4/PT/PT4/archiver/help.man",
+		"/home/fthourau/Dropbox/IUT (perso)/S4/PT/PT4/archiver/one.txt",
+		"/home/fthourau/Dropbox/IUT (perso)/S4/PT/PT4/archiver/one",
+		"/home/fthourau/Dropbox/IUT (perso)/S4/PT/PT4/archiver/Makefile",
+		"/home/fthourau/Dropbox/IUT (perso)/S4/PT/PT4/archiver/src/ustarheader.c",
+		"/home/fthourau/Dropbox/IUT (perso)/S4/PT/PT4/archiver/src/utilitarian.c",
+		"/home/fthourau/Dropbox/IUT (perso)/S4/PT/PT4/archiver/src/options.c",
+		"/home/fthourau/Dropbox/IUT (perso)/S4/PT/PT4/archiver/head/options.h",
+		"/home/fthourau/Dropbox/IUT (perso)/S4/PT/PT4/archiver/head/archive.h",
+		"/home/fthourau/Dropbox/IUT (perso)/S4/PT/PT4/archiver/head/ustarheader.h",
+		"/home/fthourau/Dropbox/IUT (perso)/S4/PT/PT4/archiver/head/utilitarian.h",
+		"/home/fthourau/Documents/IUT/S4/PT/PT4/archiver/help.man",
+		"/home/fthourau/Dropbox/IUT (perso)/S4/PT/PT4/archiver/main",
+		"/home/fthourau/Dropbox/IUT (perso)/S4/PT/TESTS/src/utilitarian.c",
+		"/home/fthourau/Dropbox/IUT (perso)/S4/PT/TESTS/head/ustarheader.h",
+		"/home/fthourau/Dropbox/IUT (perso)/S4/PT/TESTS/src/ustarheader.c",
+		"/home/fthourau/Dropbox/IUT (perso)/S4/PT/TESTS/src/main.c",
+		"/home/fthourau/Dropbox/IUT (perso)/S4/PT/TESTS/ustarheader.h",
+		"/home/fthourau/Dropbox/IUT (perso)/S4/PT/TESTS/ustarheader.c",
+		"/home/fthourau/Dropbox/Projet Multi-Niveaux/CSS/Style_store.css",
+		"/home/fthourau/Dropbox/Projet Multi-Niveaux/oeuvre.php",
+		"/home/fthourau/Dropbox/Projet Multi-Niveaux/orchestre.php",
+		"/home/fthourau/Dropbox/Projet Multi-Niveaux/dirigeant.php",
+		"/home/fthourau/Dropbox/Projet Multi-Niveaux/album.php",
+		"/home/fthourau/Dropbox/Projet Multi-Niveaux/musicien.php",
+		"/home/fthourau/Dropbox/Projet Multi-Niveaux/musicstore.php",
+		"/home/fthourau/Dropbox/Projet Multi-Niveaux/CSS/Style_index.css",
+		"/home/fthourau/Dropbox/Projet Multi-Niveaux/extrait.php",
+		"/home/fthourau/Dropbox/Projet Multi-Niveaux/photo.php",
+		"/home/fthourau/Dropbox/Projet Multi-Niveaux/HTML/menu_store.html",
+		"/home/fthourau/Dropbox/Projet Multi-Niveaux/HTML/menu.html",
+		"/home/fthourau/Dropbox/Projet Multi-Niveaux/HTML/types.html",
+		"/home/fthourau/Dropbox/Projet Multi-Niveaux/HTML/head.html",
+		"/home/fthourau/Dropbox/IUT (perso)/S3/Multiniveaux/Projet/formulaire_login.php",
+		"/home/fthourau/Dropbox/IUT (perso)/S3/Multiniveaux/Projet/CSS/Style_store.css",
+		"/home/fthourau/Dropbox/IUT (perso)/S3/Multiniveaux/Projet/HTML/menu_store.html",
+		"/home/fthourau/Dropbox/IUT (perso)/S3/Multiniveaux/Projet/HTML/types.html",
+		"/home/fthourau/Dropbox/IUT (perso)/S3/Multiniveaux/Projet/HTML/multicompte.html",
+		"/home/fthourau/Dropbox/IUT (perso)/S3/Multiniveaux/Projet/HTML/menu.html",
+		"/home/fthourau/Dropbox/IUT (perso)/S3/Multiniveaux/Projet/recherche.php",
+		"/home/fthourau/Dropbox/IUT (perso)/S3/Multiniveaux/Projet/musicstore.php",
+		"/home/fthourau/Dropbox/IUT (perso)/S3/Multiniveaux/Projet/CSS/Style_index.css",
+		"/home/fthourau/Dropbox/IUT (perso)/S3/Multiniveaux/Projet/Musiciens.php",
+		"/home/fthourau/Dropbox/IUT (perso)/S3/Multiniveaux/Projet/photo.php",
+		"/home/fthourau/Dropbox/IUT (perso)/S3/Multiniveaux/Projet/HTML/head.html",
+		"/home/fthourau/Dropbox/IUT (perso)/S3/Multiniveaux/Projet/login.php",
+		"/home/fthourau/Dropbox/IUT (perso)/S3/Multiniveaux/Projet/logout.php",
+		"/home/fthourau/Téléchargements/ClientPOP/src/ClientPOPApp.java",
+		"/home/fthourau/Dropbox/IUT (perso)/S3/Multiniveaux/Projet/script-menu-deroulant/index.html",
+		"/home/fthourau/Dropbox/IUT (perso)/S3/Multiniveaux/Projet/menu_store.html",
+		"/home/fthourau/Dropbox/IUT (perso)/S3/Multiniveaux/Projet/HTML/liste.html",
+		"/home/fthourau/Téléchargements/indicator-brightness-maxsteps.py",
+		"/home/fthourau/Dropbox/IUT (perso)/S3/Multiniveaux/Test/menu_v2/index.html",
+		"/home/fthourau/Dropbox/IUT (perso)/S3/Multiniveaux/Test/menu_v2/menuDeroulant.js",
+		"/home/fthourau/.bash_aliases",
+		"/home/fthourau/Dropbox/Développement/Shell_Script/xaser/xaser",
+		"/home/fthourau/Dropbox/Développement/Shell_Script/xaser/identification",
+		"/home/fthourau/.bashrc",
+		"/home/fthourau/.bash_history",
+		"/home/fthourau/.bash_logout",
+		"/home/fthourau/Documents/IUT/S3/Multiniveaux/Test/menu_v2/menuDeroulant.js",
+		"/home/fthourau/Documents/IUT/S3/Multiniveaux/Test/menu_v2/index.html",
+		"/home/fthourau/Documents/IUT/S3/Multiniveaux/Test/menu.js",
+		"/home/fthourau/Documents/IUT/S3/Multiniveaux/AJAX/page-ajax.html",
+		"/home/fthourau/Documents/IUT/S3/Multiniveaux/AJAX/page-ajax.php",
+		"/home/fthourau/Documents/IUT/S3/Multiniveaux/Test/index.css",
+		"/home/fthourau/Documents/IUT/S3/Multiniveaux/Test/index.html"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			"."
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"alt+shift+f",
+			"ctrl",
+			"shift",
+			"ctrl+d",
+			"ctrl+shift+d",
+			"ctrl+d",
+			"ctrl+f1",
+			"ctrl+space",
+			"ctrl+alt+l",
+			"ctrl+alt+u",
+			"ctrl+shift+u",
+			"ctrl+u",
+			"ruler",
+			"ctrl+²",
+			"caca",
+			"command",
+			"show_panel",
+			"{ \"keys\": [\"ctrl+k\", \"ctrl+alt+d\"], \"command\": \"find_under_expand_skip\" },",
+			"	{ \"keys\": [\"ctrl+k\", \"ctrl+alt+d\"], \"command\": \"find_under_expand_skip\" },\n",
+			"ctrl+i",
+			"completion",
+			"side",
+			"ctrl+m",
+			"ctrl+b",
+			"ctrl+alt+shift+",
+			"ctrl+alt+shift+3",
+			"ctrl+alt+shift+2",
+			"ctrl+alt+shift+1",
+			"ctrl+shift+d",
+			"ctrl+alt+d",
+			"ctrl+d",
+			"ctrl+alt+shift+c",
+			"toggle_comment",
+			"ctrl+alt+c",
+			"ctrl+shift+c",
+			"size",
+			"		",
+			"file",
+			"*",
+			".",
+			"*",
+			"&file",
+			"*",
+			"file",
+			"fil",
+			"*",
+			"&",
+			"file",
+			"fichier",
+			"archive",
+			"\\033[1m",
+			"options",
+			"ustarheader",
+			"ARCHIVE",
+			"477",
+			"&",
+			"88",
+			"38",
+			"\n#",
+			"SIZE",
+			" = \"\"",
+			"mus",
+			"}\n",
+			"30",
+			"margin-bottom: 10px;",
+			"10",
+			"fff",
+			"111",
+			"444",
+			"30",
+			"28",
+			"border-style: groove;",
+			"10",
+			"15",
+			"&eactue",
+			"&eactue;",
+			"é",
+			"Type_Morceau",
+			"que",
+			"'];\n",
+			";\";\n",
+			"75",
+			"width",
+			"ul li a",
+			"menu",
+			"  ",
+			"menu",
+			"ty",
+			"ch",
+			"#",
+			"menu",
+			"111",
+			"menu",
+			"A-C",
+			"G-I",
+			"D-F",
+			"id=\"ss-item\"",
+			" id=\"item\"",
+			"MenuDeroulant",
+			"ctrl+shift+q",
+			";",
+			"	$",
+			"id=\"MenuDeroulant\"",
+			"m",
+			"responseText",
+			"6",
+			"addrPASV",
+			"')'",
+			"','",
+			"nsagnett",
+			"/nsagnett",
+			"for",
+			"i",
+			"nsagnett",
+			"/nsagnett",
+			"nsagnett"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"command",
+			"caca",
+			"for",
+			"i"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "src/archive.c",
+					"settings":
+					{
+						"buffer_size": 2156,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1762,
+								1762
+							]
+						],
+						"settings":
+						{
+							"rulers":
+							[
+								78
+							],
+							"syntax": "Packages/C++/C.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 350.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 3,
+			"sheets":
+			[
+				{
+					"buffer": 1,
+					"file": "src/ustarheader.c",
+					"settings":
+					{
+						"buffer_size": 1295,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								260,
+								260
+							]
+						],
+						"settings":
+						{
+							"rulers":
+							[
+								78
+							],
+							"syntax": "Packages/C++/C.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "src/main.c",
+					"settings":
+					{
+						"buffer_size": 632,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								498,
+								498
+							]
+						],
+						"settings":
+						{
+							"rulers":
+							[
+								78
+							],
+							"syntax": "Packages/C++/C.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "src/utilitarian.c",
+					"settings":
+					{
+						"buffer_size": 811,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								82,
+								82
+							]
+						],
+						"settings":
+						{
+							"rulers":
+							[
+								78
+							],
+							"syntax": "Packages/C++/C.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "src/options.c",
+					"settings":
+					{
+						"buffer_size": 205,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								205,
+								205
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 5,
+					"file": "head/archive.h",
+					"settings":
+					{
+						"buffer_size": 173,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								19,
+								19
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "head/ustarheader.h",
+					"settings":
+					{
+						"buffer_size": 1547,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1357,
+								1357
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 254.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "head/options.h",
+					"settings":
+					{
+						"buffer_size": 252,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "head/utilitarian.h",
+					"settings":
+					{
+						"buffer_size": 100,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								100,
+								100
+							]
+						],
+						"settings":
+						{
+							"rulers":
+							[
+								78
+							],
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 34.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				2
+			],
+			[
+				1,
+				0,
+				2,
+				1
+			],
+			[
+				1,
+				1,
+				2,
+				2
+			]
+		],
+		"cols":
+		[
+			0.0,
+			0.5,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			0.5,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 249.0
+	},
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"logou",
+				"PHP/logout.php"
+			],
+			[
+				"login",
+				"PHP/login.php"
+			],
+			[
+				"inscr",
+				"PHP/inscription.php"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": false,
+	"side_bar_width": 194.0,
+	"status_bar_visible": true
+}
