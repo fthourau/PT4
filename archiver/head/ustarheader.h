@@ -45,6 +45,6 @@ typedef struct FILE_HEADER {
 
 // SOME UTILITARIAN FUNCTIONS
 void printf_header(FILE_HEADER fh);
-int header_is_empty(fh);
+int header_is_empty(FILE_HEADER fh);
 
 #endif
