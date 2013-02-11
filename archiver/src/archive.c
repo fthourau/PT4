@@ -37,7 +37,7 @@ void extract_files_from_archive(FILE* archive) {
 				cursor_pos = 0;
 				nbr_of_block = filesize / BLOCK_SIZE;
 
-				if(nbr_of_block >= 0 && (filesize % BLOCK_SIZE) > 0)
+				if((filesize % BLOCK_SIZE) > 0)
 					nbr_of_block++;
 
 				// Get the content from the archive
@@ -75,19 +75,13 @@ void list_files_from_archive(FILE* archive) {
 		if(fh.name != NULL && fh.name[0] != 0) {
 			int filesize = oct2dec(fh.size);
 
-			/*(filesize == 0) ? 
-				printf("%s%s --- dossier --- %d.\n", 
-						fh.prefix, fh.name, atoi(fh.mode)):
-				printf("%s%s --- %d octets --- %d.\n", 
-						fh.prefix, fh.name, filesize, atoi(fh.mode));*/
-
 			printf("%s%s --- %d octets --- %d.\n", fh.prefix, fh.name, 
 													filesize, atoi(fh.mode));
 
 			// Figuring out number of file content's block for the offset
 			nbr_of_block = filesize / BLOCK_SIZE;
 
-			if(nbr_of_block >= 0 && (filesize % BLOCK_SIZE) > 0)
+			if((filesize % BLOCK_SIZE) > 0)
 				nbr_of_block++;
 
 			cursor_offset = (BLOCK_SIZE * nbr_of_block);

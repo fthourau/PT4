@@ -1,4 +1,4 @@
-.PHONY: clean, proper, launch, rebuild
+.PHONY: clean, proper, test, rebuild, archive
 
 # Directories
 OBJ_DIR = obj
@@ -44,7 +44,14 @@ clean:
 proper: clean
 		rm -rf $(EXEC)
 
-launch:
+test:
 		./$(EXEC)
 
 rebuild: proper all
+
+archive:
+		@echo un > one.txt
+		@echo deux > two.txt 
+		@echo trois > three.txt
+		@tar cvf a.tar one.txt two.txt three.txt 1> /dev/null
+		@rm -f one.txt two.txt three.txt

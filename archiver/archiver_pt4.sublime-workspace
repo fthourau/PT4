@@ -4,6 +4,18 @@
 		"selected_items":
 		[
 			[
+				"file",
+				"filesize"
+			],
+			[
+				"cur",
+				"cursor_pos"
+			],
+			[
+				"curso",
+				"cursor_offset"
+			],
+			[
 				"fil",
 				"filesize"
 			],
@@ -14,10 +26,6 @@
 			[
 				"de",
 				"devmajor"
-			],
-			[
-				"file",
-				"filesize"
 			],
 			[
 				"ar",
@@ -351,15 +359,7 @@
 			"file": "src/archive.c",
 			"settings":
 			{
-				"buffer_size": 2156,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "src/ustarheader.c",
-			"settings":
-			{
-				"buffer_size": 1295,
+				"buffer_size": 2670,
 				"line_ending": "Unix"
 			}
 		},
@@ -367,7 +367,18 @@
 			"file": "src/main.c",
 			"settings":
 			{
-				"buffer_size": 632,
+				"buffer_size": 439,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "#include \"../head/ustarheader.h\"\n#include \"../head/utilitarian.h\"\n\nvoid construct_ustar_header_from_archive(FILE_HEADER* fh, FILE* file) {\n	fread(fh->name, NAME_S, 1, file);\n	fread(fh->mode, MODE_S, 1, file);\n	fread(fh->uid, UID_S, 1, file);\n	fread(fh->gid, GID_S, 1, file);\n	fread(fh->size, SIZE_S, 1, file);\n	fread(fh->mtime, MTIME_S, 1, file);\n	fread(fh->cksum, CKSUM_S, 1, file);\n	fread(fh->typeflag, TYPEFLAG_S, 1, file);\n	fread(fh->linkname, LINKNAME_S, 1, file);\n	fread(fh->magic, MAGIC_S, 1, file);\n	fread(fh->version, VERSION_S, 1, file);\n	fread(fh->uname, UNAME_S, 1, file);\n	fread(fh->gname, GNAME_S, 1, file);\n	fread(fh->devmajor, DEVMAJOR_S, 1, file);\n	fread(fh->devminor, DEVMINOR_S, 1, file);\n	fread(fh->prefix, PREFIX_S, 1, file);\n	fread(fh->stuffing, STUFFING_S, 1, file);\n}\n\nvoid construct_ustar_header_from_file(FILE_HEADER* fh, char* filename) {\n	fh = NULL;\n	filename = NULL;\n}\n\nchar* convert_filesize(unsigned int size) {\n	if(size > 1 073 741 824) {\n		char s[sizeof(size)];\n		sprintf(s, \"%d\", roundf(size * 10.0f) / 10.0f);\n		\n		return \"\"\n	}\n}\n\nvoid printf_header(FILE_HEADER fh) {\n	printf(\"NAME: %s\\n\", fh.name);\n	printf(\"MODE: %s\\n\", fh.mode);\n	printf(\"UID: %s\\n\", fh.uid);\n	printf(\"GID: %s\\n\", fh.gid);\n	printf(\"SIZE: %d\\n\", oct2dec(fh.size));		// Converted to decimal number\n	printf(\"CKSUM: %s\\n\", fh.cksum);\n	printf(\"TYPEFLAG: %s\\n\", fh.typeflag);\n	printf(\"LINKNAME: %s\\n\", fh.linkname);\n	printf(\"MAGIC: %s\\n\", fh.magic);\n	printf(\"VERSION: %s\\n\", fh.version);\n	printf(\"UNAME: %s\\n\", fh.uname);\n	printf(\"GNAME: %s\\n\", fh.gname);\n	printf(\"DEVMAJOR: %s\\n\", fh.devmajor);\n	printf(\"DEVMINOR: %s\\n\", fh.devminor);\n	printf(\"PREFIX: %s\\n\", fh.prefix);\n	printf(\"STUFFING: %s\\n\", fh.stuffing);\n}\n",
+			"file": "src/ustarheader.c",
+			"file_size": 1618,
+			"file_write_time": 1360176984000000,
+			"settings":
+			{
+				"buffer_size": 1712,
 				"line_ending": "Unix"
 			}
 		},
@@ -375,7 +386,7 @@
 			"file": "src/utilitarian.c",
 			"settings":
 			{
-				"buffer_size": 811,
+				"buffer_size": 812,
 				"line_ending": "Unix"
 			}
 		},
@@ -391,7 +402,7 @@
 			"file": "head/archive.h",
 			"settings":
 			{
-				"buffer_size": 173,
+				"buffer_size": 197,
 				"line_ending": "Unix"
 			}
 		},
@@ -399,7 +410,7 @@
 			"file": "head/ustarheader.h",
 			"settings":
 			{
-				"buffer_size": 1547,
+				"buffer_size": 1663,
 				"line_ending": "Unix"
 			}
 		},
@@ -427,11 +438,15 @@
 		"selected_items":
 		[
 			[
-				"Package Control: install Package",
-				"Package Control: Install Package"
+				"lower",
+				"Convert Case: Lower Case"
 			],
 			[
 				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: install Package",
 				"Package Control: Install Package"
 			],
 			[
@@ -564,7 +579,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 93.0,
 		"where_history":
 		[
 			"."
@@ -575,6 +590,14 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"i",
+			"it",
+			"\"\n",
+			">\n",
+			"construct_ustar_header",
+			"ctrl+shift+alt+t",
+			"ctrl+shift+t",
+			"alt+shift+t",
 			"alt+shift+f",
 			"ctrl",
 			"shift",
@@ -698,6 +721,8 @@
 		"regex": false,
 		"replace_history":
 		[
+			"cursor_pos",
+			"nbr_of_block",
 			"command",
 			"caca",
 			"for",
@@ -720,15 +745,15 @@
 					"file": "src/archive.c",
 					"settings":
 					{
-						"buffer_size": 2156,
+						"buffer_size": 2670,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1762,
-								1762
+								2147,
+								2147
 							]
 						],
 						"settings":
@@ -741,7 +766,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 350.0,
+						"translation.y": 855.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -749,23 +774,23 @@
 			]
 		},
 		{
-			"selected": 3,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 1,
-					"file": "src/ustarheader.c",
+					"file": "src/main.c",
 					"settings":
 					{
-						"buffer_size": 1295,
+						"buffer_size": 439,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								260,
-								260
+								11,
+								11
 							]
 						],
 						"settings":
@@ -785,18 +810,18 @@
 				},
 				{
 					"buffer": 2,
-					"file": "src/main.c",
+					"file": "src/ustarheader.c",
 					"settings":
 					{
-						"buffer_size": 632,
+						"buffer_size": 1712,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								498,
-								498
+								1047,
+								1047
 							]
 						],
 						"settings":
@@ -809,7 +834,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 329.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -819,15 +844,15 @@
 					"file": "src/utilitarian.c",
 					"settings":
 					{
-						"buffer_size": 811,
+						"buffer_size": 812,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								82,
-								82
+								812,
+								812
 							]
 						],
 						"settings":
@@ -840,7 +865,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 270.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -882,15 +907,15 @@
 					"file": "head/archive.h",
 					"settings":
 					{
-						"buffer_size": 173,
+						"buffer_size": 197,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								19,
-								19
+								49,
+								49
 							]
 						],
 						"settings":
@@ -908,15 +933,15 @@
 					"file": "head/ustarheader.h",
 					"settings":
 					{
-						"buffer_size": 1547,
+						"buffer_size": 1663,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1357,
-								1357
+								1585,
+								1585
 							]
 						],
 						"settings":
@@ -925,7 +950,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 254.0,
+						"translation.y": 585.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -968,8 +993,8 @@
 						"selection":
 						[
 							[
-								100,
-								100
+								92,
+								92
 							]
 						],
 						"settings":
