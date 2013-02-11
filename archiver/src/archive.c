@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <time.h>
+#include <errno.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/unistd.h>
@@ -11,8 +12,6 @@
 #include "../head/ustarheader.h"
 #include "../head/utilitarian.h"
 
-#define BLOC_SIZE 512
-
 int get_file_weight(FILE* file) {
 	fseek(file, 0, SEEK_END);
 	int t = ftell(file);
@@ -21,34 +20,12 @@ int get_file_weight(FILE* file) {
 	return t;
 }
 
-void construct_ustar_header(FILE_HEADER* fh, FILE* file) {
-	fread(fh->name, NAME_S, 1, file);
-	fread(fh->mode, MODE_S, 1, file);
-	fread(fh->uid, UID_S, 1, file);
-	fread(fh->gid, GID_S, 1, file);
-	fread(fh->size, SIZE_S, 1, file);
-	fread(fh->atime, ATIME_S, 1, file);
-	fread(fh->cksum, CKSUM_S, 1, file);
-	fread(fh->typeflag, TYPEFLAG_S, 1, file);
-	fread(fh->linkname, LINKNAME_S, 1, file);
-	fread(fh->magic, MAGIC_S, 1, file);
-	fread(fh->version, VERSION_S, 1, file);
-	fread(fh->uname, UNAME_S, 1, file);
-	fread(fh->gname, GNAME_S, 1, file);
-	fread(fh->devmajor, DEVMAJOR_S, 1, file);
-	fread(fh->devminor, DEVMINOR_S, 1, file);
-	fread(fh->prefix, PREFIX_S, 1, file);
-	fread(fh->stuffing, STUFFING_S, 1, file);
-}
-
-void extract_files_from_archive(FILE * archive) {
-	struct stat buf;
+void extract_files_from_archive(FILE* archive) {
 	FILE_HEADER fh;
-	int i;
-	int it;
+	unsigned int cursor_pos, nbr_of_block;
 	bool end_of_archive = false;
 
-	construct_ustar_header(&fh, archive);
+	construct_ustar_header_from_archive(&fh, archive);
 
 	do {
 		if(fh.name != NULL && fh.name[0] != 0) {
@@ -57,20 +34,20 @@ void extract_files_from_archive(FILE * archive) {
 			FILE* output_file = fopen(fh.name, "w+");
 
 			if(output_file != NULL) {
-				i = 0;
-				it = filesize / BLOC_SIZE;
+				cursor_pos = 0;
+				nbr_of_block = filesize / BLOCK_SIZE;
 
-				if(it >= 0 && (filesize % BLOC_SIZE) > 0)
-					it++;
+				if(nbr_of_block >= 0 && (filesize % BLOCK_SIZE) > 0)
+					nbr_of_block++;
 
 				// Get the content from the archive
-				while(i < (HEADER_S * it)) {
-					if(i >= filesize)
+				while(cursor_pos < (BLOCK_SIZE * nbr_of_block)) {
+					if(cursor_pos >= filesize)
 						fgetc(archive);
 					else
 						fputc(fgetc(archive), output_file);
 					
-					i++;
+					cursor_pos++;
 				}
 
 				fclose(output_file);
@@ -79,17 +56,49 @@ void extract_files_from_archive(FILE * archive) {
 			else
 				fprintf(stderr, "Impossible d'extraire le fichier %s\n", fh.name);
 
-			construct_ustar_header(&fh, archive);
+			construct_ustar_header_from_archive(&fh, archive);
 		}
 		else
 			end_of_archive = true;
 	} while(!end_of_archive);
 }
 
-void archive_reader(FILE * archive) {
-	struct stat buf;
+void list_files_from_archive(FILE* archive) {
 	FILE_HEADER fh;
+	unsigned int cursor_offset;
+	unsigned int nbr_of_block;
+	bool end_of_archive = false;
 
-	construct_ustar_header(&fh, archive);
-	printf_header(fh);
+	construct_ustar_header_from_archive(&fh, archive);
+
+	do {
+		if(fh.name != NULL && fh.name[0] != 0) {
+			int filesize = oct2dec(fh.size);
+
+			/*(filesize == 0) ? 
+				printf("%s%s --- dossier --- %d.\n", 
+						fh.prefix, fh.name, atoi(fh.mode)):
+				printf("%s%s --- %d octets --- %d.\n", 
+						fh.prefix, fh.name, filesize, atoi(fh.mode));*/
+
+			printf("%s%s --- %d octets --- %d.\n", fh.prefix, fh.name, 
+													filesize, atoi(fh.mode));
+
+			// Figuring out number of file content's block for the offset
+			nbr_of_block = filesize / BLOCK_SIZE;
+
+			if(nbr_of_block >= 0 && (filesize % BLOCK_SIZE) > 0)
+				nbr_of_block++;
+
+			cursor_offset = (BLOCK_SIZE * nbr_of_block);
+
+			// Applying offset to the file from the current cursor position
+			fseek(archive, cursor_offset, SEEK_CUR);
+
+			// Then, get the next header
+			construct_ustar_header_from_archive(&fh, archive);
+		}
+		else
+			end_of_archive = true;
+	} while(!end_of_archive);
 }

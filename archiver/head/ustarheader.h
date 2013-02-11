@@ -1,13 +1,15 @@
 #ifndef _USTARHEADER_H_
 #define _USTARHEADER_H_
 
+#include <stdio.h>
+
 // CONSTANT SIZES OF USTAR HEADER FIELDS
 #define NAME_S 100
 #define MODE_S 8
 #define UID_S 8
 #define GID_S 8
 #define SIZE_S 12
-#define ATIME_S 12
+#define MTIME_S 12
 #define CKSUM_S 8
 #define TYPEFLAG_S 1
 #define LINKNAME_S 100
@@ -28,8 +30,7 @@ typedef struct FILE_HEADER {
 	char uid[UID_S];				// User IDentifier
 	char gid[GID_S];				// Group IDentifier
 	char size[SIZE_S];				// Lengh of file contents
-	char atime[ATIME_S];			// Last access time - Not in the header
-	//char* mtime;					// Last modification time
+	char mtime[MTIME_S];			// Last modification time
 	char cksum[CKSUM_S];			// File and header checksum
 	char typeflag[TYPEFLAG_S];		// Type of the file
 	char linkname[LINKNAME_S];		// Name uses for the link
@@ -44,7 +45,9 @@ typedef struct FILE_HEADER {
 } FILE_HEADER;
 
 // SOME UTILITARIAN FUNCTIONS
+void construct_ustar_header_from_archive(FILE_HEADER* fh, FILE* archive);
+void construct_ustar_header_from_file(FILE_HEADER* fh, char* filename);
+
 void printf_header(FILE_HEADER fh);
-int header_is_empty(fh);
 
 #endif
