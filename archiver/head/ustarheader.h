@@ -2,6 +2,7 @@
 #define _USTARHEADER_H_
 
 #include <stdio.h>
+#include <sys/types.h>
 
 // CONSTANT SIZES OF USTAR HEADER FIELDS
 #define NAME_S 100
@@ -45,8 +46,14 @@ typedef struct FILE_HEADER {
 } FILE_HEADER;
 
 // SOME UTILITARIAN FUNCTIONS
-void construct_ustar_header_from_archive(FILE_HEADER* fh, FILE* archive);
-void construct_ustar_header_from_file(FILE_HEADER* fh, char* filename);
+void build_ustar_header_from_archive(FILE_HEADER* fh, FILE* archive);
+void build_ustar_header_from_file(FILE_HEADER* fh, char* filename);
+
+void file_mode_edit(char* header_mode, mode_t stat_mode);
+char get_user_mode(mode_t mode);
+char get_group_mode(mode_t mode);
+char get_other_mode(mode_t mode);
+void get_id(char* header_id, int id);
 
 void printf_header(FILE_HEADER fh);
 

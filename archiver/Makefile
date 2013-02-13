@@ -35,17 +35,17 @@ $(OBJ_DIR)/ustarheader.o: $(SRC_DIR)/ustarheader.c $(INC_DIR)/ustarheader.h
 $(OBJ_DIR)/options.o: $(SRC_DIR)/options.c $(INC_DIR)/options.h
 		$(CC) $(CNORM) -c $< -o $@ $(CFLAGS)
 
-$(OBJ_DIR)/archive.o: $(SRC_DIR)/archive.c $(INC_DIR)/archive.h $(SRC_DIR)/ustarheader.c $(INC_DIR)/ustarheader.h
+$(OBJ_DIR)/archive.o: $(SRC_DIR)/archive.c $(INC_DIR)/archive.h
 		$(CC) $(CNORM) -c $< -o $@ $(CFLAGS)
 
 clean:
 		rm -rf $(OBJ_DIR)/*.o $(OBJ_DIR)/*.bak
 
 proper: clean
-		rm -rf $(EXEC)
+		rm -rf $(EXEC) a.tar
 
 test:
-		./$(EXEC)
+		./$(EXEC) a.tar
 
 rebuild: proper all
 

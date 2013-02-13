@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 #include "../head/archive.h"
+#include "../head/options.h"
 
 int main(int argc, char** argv) {
 	FILE* archive = NULL;
@@ -13,7 +14,8 @@ int main(int argc, char** argv) {
 
 	if(archive != NULL) {
 		// extract_files_from_archive(archive);
-		list_files_from_archive(archive);
+		// list_files_from_archive(archive);
+		build_archive_from_files(argv, NULL);
 		fclose(archive);
 	}
 	else

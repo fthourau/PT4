@@ -5,9 +5,7 @@
 
 // Options' flags
 extern bool VERBOSE_FLAG;
-
-// Options' flags' modifiers
-void activate_verbose();
+extern bool FILENAME_FLAG;
 
 // This command is used in order to display help on terminal
 void display_help();
