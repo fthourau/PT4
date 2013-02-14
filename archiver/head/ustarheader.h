@@ -49,6 +49,7 @@ typedef struct FILE_HEADER {
 void build_ustar_header_from_archive(FILE_HEADER* fh, FILE* archive);
 void build_ustar_header_from_file(FILE_HEADER* fh, char* filename);
 
+void get_prefix_and_name(char* full_path, char* filename, char* path);
 void file_mode_edit(char* header_mode, mode_t stat_mode);
 char get_user_mode(mode_t mode);
 char get_group_mode(mode_t mode);

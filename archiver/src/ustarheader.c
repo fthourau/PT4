@@ -30,18 +30,69 @@ void build_ustar_header_from_file(FILE_HEADER* fh, char* filename) {
 	struct stat buffer;
 
 	if(stat(filename, &buffer) == 0) {
-		strcpy(fh->name, filename);
+		get_prefix_and_name(filename, fh->name, fh->prefix);
 		file_mode_edit(fh->mode, buffer.st_mode);
 		get_id(fh->uid, buffer.st_uid);
 		get_id(fh->gid, buffer.st_gid);
-		
 		printf("%s\n", fh->name);
 		printf("%s\n", fh->mode);
 		printf("%s\n", fh->uid);
 		printf("%s\n", fh->gid);
+		printf("%s\n", fh->prefix);
 	}
 	else
 		fprintf(stderr, "Echec de stat sur le fichier %s.\n", filename);
+}
+
+void get_prefix_and_name(char* full_path, char* filename, char* path) {
+	int length = strlen(full_path);
+	int i, j;
+	int last_but_one_separator_position = -1;
+	int last_separator_position = -1;
+
+	// This part is looking for a folder separator
+	for(i = 0 ; i < length ; i++) {
+		if(full_path[i] == '/') {
+			last_but_one_separator_position = last_separator_position;
+			last_separator_position = i;
+		}
+	}
+
+	if( ( ( last_but_one_separator_position == -1 ||
+			last_but_one_separator_position == 0 ) &&
+		last_separator_position == (length - 1) ) ) {
+		// This is when it's just a folder like '/dir/' or 'dir/'
+		strcpy(filename, full_path);
+		path[0] = '\0';
+	}
+	else if(last_separator_position == -1) {
+		// This is when it's just a file (everything except a directory)
+		strcpy(filename, full_path);
+		path[0] = '\0';
+	}
+	else {
+		j = 0;
+		for(i = 0 ; i < length ; i++) {
+			// The path is copied before
+			// An empty directory
+			if( last_separator_position == (length - 1) &&
+				i <= last_but_one_separator_position ) {
+				path[i] = full_path[i];
+			}
+			else if( last_separator_position != (length - 1) && 
+					 i <= last_separator_position ) {
+				// A file in a directory
+				path[i] = full_path[i];
+			}
+			else {
+				// Then, the filename is copied too
+				filename[j] = full_path[i];
+				j++;
+			}
+		}
+		path[last_separator_position + 1] = '\0';
+		filename[j + 1] = '\0';
+	}
 }
 
 void file_mode_edit(char* header_mode, mode_t stat_mode) {
