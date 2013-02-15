@@ -3,8 +3,8 @@
 
 #define BLOCK_SIZE 512
 
-void extract_files_from_archive(FILE * archive);
-void build_archive_from_files(char* files[], char* archive_name);
-void list_files_from_archive(FILE * archive);
+void extract_files_from_archive(char* archive_path);
+void build_archive_from_files(int number_of_files, char** files);
+void list_files_from_archive(char* archive_path);
 
 #endif

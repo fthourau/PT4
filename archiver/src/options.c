@@ -2,8 +2,12 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-bool VERBOSE_FLAG = false;
+// Default action is 'NO_ACTION', it does nothing
+action_t CURRENT_ACTION = NO_ACTION;
 
-void display_help() {
-	system("cat help.man | more");
-}
+// All flags are disabled by default
+bool VERBOSE_FLAG = false;
+bool ARCHIVE_NAME_FLAG = false;
+bool COMPRESS_FLAG = false;
+bool SPARSE_FLAG = false;
+bool DIFF_FLAG = false;

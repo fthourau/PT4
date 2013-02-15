@@ -3,5 +3,6 @@
 
 int oct2dec(char* n);
 int dec2oct(char* n);
+char* argument(int nb);
 
 #endif

@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <stdbool.h>
 #include <time.h>
 #include <errno.h>
@@ -34,103 +35,129 @@ int get_file_weight(FILE* file) {
 	return t;
 }
 
-void extract_files_from_archive(FILE* archive) {
-	FILE_HEADER fh;
-	unsigned int cursor_pos, nbr_of_block;
-	bool end_of_archive = false;
+void extract_files_from_archive(char* archive_path) {
+	errno = 0;
+	FILE* archive = fopen(archive_path, "r");
 
-	if(VERBOSE_FLAG)
-		printf("Retrieval in progress ...\n");
+	if(archive != NULL && errno == 0) {
+		FILE_HEADER fh;
+		unsigned int cursor_pos, nbr_of_block;
+		bool end_of_archive = false;
 
-	build_ustar_header_from_archive(&fh, archive);
+		if(VERBOSE_FLAG)
+			printf("Retrieval in progress ...\n");
 
-	do {
-		if(fh.name != NULL && fh.name[0] != 0) {
-			// Get size and create output file
-			size_t filesize = oct2dec(fh.size);
-			FILE* output_file = fopen(fh.name, "w+");
+		build_ustar_header_from_archive(&fh, archive);
 
-			if(output_file != NULL) {
-				cursor_pos = 0;
-				nbr_of_block = filesize / BLOCK_SIZE;
+		do {
+			if(fh.name != NULL && fh.name[0] != 0) {
+				errno = 0;
+				// Get size and create output file
+				size_t filesize = oct2dec(fh.size);
+				FILE* output_file = fopen(fh.name, "w+");
 
-				if((filesize % BLOCK_SIZE) > 0)
-					nbr_of_block++;
+				if(output_file != NULL && errno == 0) {
+					cursor_pos = 0;
+					nbr_of_block = filesize / BLOCK_SIZE;
 
-				// Get the content from the archive
-				while(cursor_pos < (BLOCK_SIZE * nbr_of_block)) {
-					if(cursor_pos >= filesize)
-						fgetc(archive);
-					else
-						fputc(fgetc(archive), output_file);
-					
-					cursor_pos++;
+					if((filesize % BLOCK_SIZE) > 0)
+						nbr_of_block++;
+
+					// Get the content from the archive
+					while(cursor_pos < (BLOCK_SIZE * nbr_of_block)) {
+						if(cursor_pos >= filesize)
+							fgetc(archive);
+						else
+							fputc(fgetc(archive), output_file);
+						
+						cursor_pos++;
+					}
+
+					if(VERBOSE_FLAG)
+						printf("Extracted: %s\n", fh.name);
+
+					fclose(output_file);
+					output_file = NULL;
 				}
+				else
+					fprintf(stderr, "Extraction impossible sur '%s': %s\n", 
+							fh.name, strerror(errno));
 
-				if(VERBOSE_FLAG)
-					printf("Extracted: %s\n", fh.name);
-
-				fclose(output_file);
-				output_file = NULL;
+				build_ustar_header_from_archive(&fh, archive);
 			}
 			else
-				fprintf(stderr, "Impossible d'extraire le fichier %s\n", fh.name);
-
-			build_ustar_header_from_archive(&fh, archive);
-		}
-		else
-			end_of_archive = true;
-	} while(!end_of_archive);
+				end_of_archive = true;
+		} while(!end_of_archive);
+	}
+	else
+		fprintf(stderr, "Fichier invalide '%s': %s\n", 
+				archive_path, strerror(errno));
 }
 
-void build_archive_from_files(char* files[], char* archive_name) {
+void build_archive_from_files(int number_of_files, char** files) {
 	FILE_HEADER fh;
+	FILE* a = NULL;
 
-	FILE* a = fopen("a.tar", "r");
-	
-	// if(FILENAME_FLAG)
-		// archive_name = files[]
+	if(files[2] != NULL)
+		a = fopen(files[2], "r");
+	else {
+		a = fopen("archive.tar", "r");
+	}
 
 	if(VERBOSE_FLAG)
 		printf("VERBOSE IS ACTIVE...\n");
+
+	// touch -d -> edit mtime
+	// touch -d "`date -d @1360884899 '+%Y-%m-%d %H:%M:%S'`" <filename>
 
 	// build_ustar_header_from_archive(&fh, a);
 	// printf_header(fh);
 	build_ustar_header_from_file(&fh, files[1]);
 }
 
-void list_files_from_archive(FILE* archive) {
-	FILE_HEADER fh;
-	unsigned int cursor_offset;
-	unsigned int nbr_of_block;
-	bool end_of_archive = false;
+void list_files_from_archive(char* archive_path) {
+	errno = 0;
+	FILE* archive = fopen(archive_path, "r");
 
-	build_ustar_header_from_archive(&fh, archive);
+	if(archive != NULL && errno == 0) {
+		if(VERBOSE_FLAG)
+			printf("Listage du contenu de '%s':\n", archive_path);
 
-	do {
-		if(fh.name != NULL && fh.name[0] != 0) {
-			int filesize = oct2dec(fh.size);
+		FILE_HEADER fh;
+		unsigned int cursor_offset;
+		unsigned int nbr_of_block;
+		bool end_of_archive = false;
 
-			if(VERBOSE_FLAG)
-				get_file_info_verbose(fh);
+		build_ustar_header_from_archive(&fh, archive);
+
+		do {
+			if(fh.name != NULL && fh.name[0] != 0) {
+				int filesize = oct2dec(fh.size);
+
+				if(VERBOSE_FLAG)
+					get_file_info_verbose(fh);
+				else
+					printf("%s/%s\n", fh.prefix, fh.name);
+
+				// Figuring out number of file content's block for the offset
+				nbr_of_block = filesize / BLOCK_SIZE;
+
+				if((filesize % BLOCK_SIZE) > 0)
+					nbr_of_block++;
+
+				cursor_offset = (BLOCK_SIZE * nbr_of_block);
+
+				// Applying offset to the file from the current cursor position
+				fseek(archive, cursor_offset, SEEK_CUR);
+
+				// Then, get the next header
+				build_ustar_header_from_archive(&fh, archive);
+			}
 			else
-				printf("%s/%s\n", fh.prefix, fh.name);
-
-			// Figuring out number of file content's block for the offset
-			nbr_of_block = filesize / BLOCK_SIZE;
-
-			if((filesize % BLOCK_SIZE) > 0)
-				nbr_of_block++;
-
-			cursor_offset = (BLOCK_SIZE * nbr_of_block);
-
-			// Applying offset to the file from the current cursor position
-			fseek(archive, cursor_offset, SEEK_CUR);
-
-			// Then, get the next header
-			build_ustar_header_from_archive(&fh, archive);
-		}
-		else
-			end_of_archive = true;
-	} while(!end_of_archive);
+				end_of_archive = true;
+		} while(!end_of_archive);
+	}
+	else
+		fprintf(stderr, "Fichier invalide '%s': %s\n", 
+				archive_path, strerror(errno));
 }

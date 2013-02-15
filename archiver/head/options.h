@@ -3,11 +3,26 @@
 
 #include <stdbool.h>
 
+// Enumeration of main possible actions
+typedef enum ACTION_T {
+	CREATE,
+	LIST,
+	ADD,
+	UPDATE,
+	EXTRACT,
+	DELETE,
+	HELP,
+	NO_ACTION
+} action_t;
+
+// Action that will be choose by the user
+extern action_t CURRENT_ACTION;
+
 // Options' flags
 extern bool VERBOSE_FLAG;
-extern bool FILENAME_FLAG;
-
-// This command is used in order to display help on terminal
-void display_help();
+extern bool ARCHIVE_NAME_FLAG;
+extern bool COMPRESS_FLAG;
+extern bool SPARSE_FLAG;
+extern bool DIFF_FLAG;
 
 #endif
