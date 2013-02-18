@@ -1,7 +1,5 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
-#include <errno.h>
 
 #include "../head/archive.h"
 #include "../head/optionhandling.h"
@@ -11,8 +9,6 @@ int main(int argc, char** argv) {
 	// Getting the options only if specified
 	if(argv[1] != NULL) {
 		get_options(argc, argv);
-		
-		errno = 0;
 
 		switch(CURRENT_ACTION) {
 			case CREATE:
@@ -22,7 +18,7 @@ int main(int argc, char** argv) {
 				if(argv[2] != NULL)
 					list_files_from_archive(argv[2]);
 				else
-					fprintf(stderr, "Argument manquant: %s\n", strerror(errno));
+					fprintf(stderr, "Argument manquant: <archive>\n");
 			break;
 			case ADD:
 			break;
@@ -32,13 +28,12 @@ int main(int argc, char** argv) {
 				if(argv[2] != NULL)
 					extract_files_from_archive(argv[2]);
 				else
-					fprintf(stderr, "Argument manquant: %s\n", strerror(errno));
+					fprintf(stderr, "Argument manquant: <archive>\n");
 			break;
 			case DELETE:
 			break;
 			case HELP:
-				printf("HELP ...\n");
-				system("cat help.man");
+				system("cat help.man | more");
 			break;
 			case NO_ACTION:
 				fprintf(stderr, "Aucune action à effectuer ...\n");

@@ -7,11 +7,9 @@
 const int NB_OPTIONS = 8; //constante qui défini le nombre d'option
 
 void get_options(int argc, char **argv) {
-	int c; //variable du switch (elle contient les caractères d'option)s
-	int i; // variable d'une boucle dans le switch
+	int c; //variable du switch (elle contient les caractères d'options)
 
-	while (1)
-	{
+	while (1) {
 		static struct option long_options[] =
 		{
 			{"add",     no_argument, 0, 'a'},
@@ -36,8 +34,7 @@ void get_options(int argc, char **argv) {
 		if(c == -1)
 			break;
 
-		switch(c)
-		{
+		switch(c) {
 			case 0:
 				if(long_options[option_index].flag != 0)
 					break;
@@ -46,19 +43,15 @@ void get_options(int argc, char **argv) {
 					printf (" with arg %s", optarg);
 				printf ("\n");
 			break;
-
 			case 'a':
 				puts("option -a\n");
 			break;
-
 			case 'v':
 				VERBOSE_FLAG = true;
 			break;
-
 			case 'b':
 				puts("option -b\n");
 			break;
-
 			case 'c':
 				CURRENT_ACTION = CREATE;
 				printf("option -c with value `%s'\n", optarg);
@@ -79,24 +72,19 @@ void get_options(int argc, char **argv) {
 
 			case 'h':
 				CURRENT_ACTION = HELP;
-				// for(i = 0 ; i < NB_OPTIONS ; i++){
-				// printf("L'option : --%s ou -%c  %s \n",long_options[i].name,long_options[i].val,argument(long_options[i].has_arg));	
-				// }
 			break;
-
 			case '?':
 				//message d'erreur
 			break;
-
 			default:
 				abort();
 		}
 	}
 
-	if (optind < argc)
-	{
+	if (optind < argc) {
 		while (optind < argc)
 			printf ("%s ", argv[optind++]);
+		
 		printf ("n'est pas une option\n");	
 	}
 }

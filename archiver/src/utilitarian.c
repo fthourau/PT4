@@ -1,9 +1,10 @@
 #include "../head/utilitarian.h"
+
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
 
-int oct2dec(char* c) {
+unsigned long long int oct2dec(char* c) {
 	unsigned int i = 0;
 	int n = strlen(c) - 1;
 	int result = 0;
@@ -20,22 +21,35 @@ int oct2dec(char* c) {
 	return result;
 }
 
-int dec2oct(char* c) {
-	int octal[12] = {0};
+unsigned long long int dec2oct(char* c) {
+	unsigned long int div_result = atoi(c);
 	int i = 0;
-	int result = atoi(c);
+	unsigned long long int result = 0;
+	unsigned long int octal[12] = {
+		1,
+		10,
+		100,
+		1000,
+		10000,
+		100000,
+		1000000,
+		10000000,
+		100000000,
+		1000000000,
+		10000000000,
+		100000000000,
+	};
 
-	while(result != 0) {
-		octal[i] = result % 8;
-		result /= 8;
-		i++;
+	while(div_result != 0) {
+		octal[i] *= (div_result % 8);
+		div_result /= 8;
+		
+		if(div_result != 0)
+			i++;
 	}
 
-	result = 0;
-	i--;
-
-	while(i != -1) {
-		result += (octal[i] * pow(10, i));
+	while(i >= 0) {
+		result += octal[i];
 		i--;
 	}
 
@@ -47,4 +61,20 @@ char* argument(int nb) {
 		return "ne prend aucun argument";
 	else
 		return "prend un argument";
+}
+
+int get_file_weight(FILE* file) {
+	fseek(file, 0, SEEK_END);
+	int t = ftell(file);
+	rewind(file);
+
+	return t;
+}
+
+bool is_tar_format(char* archive_to_check) {
+	int len = strlen(archive_to_check);
+	return ( (archive_to_check[len - 4] == '.') &&
+			 (archive_to_check[len - 3] == 't') &&
+			 (archive_to_check[len - 2] == 'a') &&
+			 (archive_to_check[len - 1] == 'r') );
 }

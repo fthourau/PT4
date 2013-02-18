@@ -34,10 +34,10 @@ typedef struct FILE_HEADER {
 	char cksum[CKSUM_S];			// File and header checksum
 	char typeflag[TYPEFLAG_S];		// Type of the file
 	char linkname[LINKNAME_S];		// Name uses for the link
-	char magic[MAGIC_S];			// Is equal to string "USTAR"
+	char magic[MAGIC_S];			// Is equal to string "ustar"
 	char version[VERSION_S];		// Version of the tar command used
-	char uname[UNAME_S];			// Name of owner (ASCII)
-	char gname[GNAME_S];			// Name of group (ASCII)
+	char uname[UNAME_S];			// Name of owner
+	char gname[GNAME_S];			// Name of group
 	char devmajor[DEVMAJOR_S];		// DEVice MAJOR number
 	char devminor[DEVMINOR_S];		// DEVice MINOR number
 	char prefix[PREFIX_S];			// Used to create file's path if non-null
@@ -47,6 +47,7 @@ typedef struct FILE_HEADER {
 // SOME UTILITARIAN FUNCTIONS
 void build_ustar_header_from_archive(FILE_HEADER* fh, FILE* archive);
 void build_ustar_header_from_file(FILE_HEADER* fh, char* filename);
+void write_header_to_archive(FILE_HEADER* fh, FILE* archive);
 
 void printf_header(FILE_HEADER fh);
 
