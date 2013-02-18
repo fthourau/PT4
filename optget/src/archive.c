@@ -28,11 +28,13 @@ void extract_files_from_archive(FILE* archive) {
 
 	construct_ustar_header_from_archive(&fh, archive);
 
-	if(VERBOSE_FLAG == true)
-		printf("coucou\n");
-
 	do {
 		if(fh.name != NULL && fh.name[0] != 0) {
+
+			if(VERBOSE_FLAG == true){
+				printf("Désarchivage du fichier %s\n", fh.name);
+			}
+			
 			// Get size and create output file
 			size_t filesize = oct2dec(fh.size);
 			FILE* output_file = fopen(fh.name, "w+");

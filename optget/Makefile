@@ -29,6 +29,6 @@ $(OBJ_DIR)/utilitarian.o: $(SRC_DIR)/utilitarian.c $(INC_DIR)/utilitarian.h
 $(OBJ_DIR)/archive.o: $(SRC_DIR)/archive.c $(INC_DIR)/archive.h
 		$(CC) -g -c $(SRC_DIR)/archive.c -o $(OBJ_DIR)/archive.o
 clean:
-		rm -rf $(OBJ_DIR)/* test one.txt txo.txt
+		rm -rf $(OBJ_DIR)/* test *.txt
 
 rebuild: clean all
