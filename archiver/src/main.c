@@ -21,6 +21,10 @@ int main(int argc, char** argv) {
 					fprintf(stderr, "Argument manquant: <archive>\n");
 			break;
 			case ADD:
+				if(argv[2] != NULL)
+					add_files_to_archive(argv[2]);
+				else
+					fprintf(stderr, "Argument manquant: <archive>\n");	
 			break;
 			case UPDATE:
 			break;
