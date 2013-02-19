@@ -141,19 +141,16 @@ void build_archive_from_files(int number_of_arguments, char** files) {
 						
 						cursor_pos++;
 					}
-
 					fclose(current_file);
 					current_file = NULL;
 				}
 				i++;
-				// current_file = fopen(files[++i], "r");
-				// build_ustar_header_from_file(&fh, current_file);
 			}
 			else
 				fprintf(stderr, "Erreur d'ouverture de '%s': %s\n", 
 										fh.name, strerror(errno));
 		} while(i < number_of_arguments);
-			
+		
 		fclose(archive);
 		archive = NULL;
 	}

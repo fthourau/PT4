@@ -49,7 +49,7 @@ clean:
 		rm -rf $(OBJ_DIR)/*.o $(OBJ_DIR)/*.bak
 
 proper: clean
-		rm -rf $(EXEC) a.tar
+		rm -rf $(EXEC)
 
 test:
 		./$(EXEC) a.tar

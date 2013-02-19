@@ -54,13 +54,14 @@ void build_ustar_header_from_file(FILE_HEADER* fh, char* filename) {
 		get_id(fh->gid, buffer.st_gid);
 		get_size(fh->size, buffer.st_size);
 		get_modification_time(fh->mtime, buffer.st_mtime);
-		strcpy(fh->cksum, "cksum** \0");
+		
 		get_file_type(fh->typeflag, buffer.st_mode);
-		strcpy(fh->magic, "ustar\0");
-		strcpy(fh->version, "  \0");
+		strcpy(fh->magic, "ustar ");
+		strcpy(fh->version, " \0");
 		get_username(fh->uname, buffer.st_uid);
 		get_groupname(fh->gname, buffer.st_gid);
 		get_device_numbers(fh->devmajor, fh->devminor, buffer.st_dev);
+		calculate_checksum(fh);
 	}
 	else
 		fprintf(stderr, "Echec de stat sur le fichier '%s': %s\n", filename,

@@ -1,6 +1,5 @@
 #include "../head/filehandling.h"
 #include "../head/utilitarian.h"
-#include "../head/ustarheader.h"
 
 #include <pwd.h>
 #include <grp.h>
@@ -202,13 +201,13 @@ void get_size(char* filesize, off_t size) {
 	
 	int len = strlen(buffer);
 
-	for(i = 0 ; i < SIZE_S ; i++)
+	for(i = 0 ; i < (SIZE_S - 1); i++)
 		filesize[i] = '0';
 
 	i = 0;
 
 	while(buffer[i] != '\0' && i < len) {
-		filesize[SIZE_S - len + i] = buffer[i];
+		filesize[SIZE_S - len - 1 + i] = buffer[i];
 		i++;
 	}
 }
@@ -224,13 +223,13 @@ void get_modification_time(char* header_mtime, time_t mtime) {
 
 	int len = strlen(buffer);
 
-	for(i = 0 ; i < MTIME_S ; i++)
+	for(i = 0 ; i < (MTIME_S - 1) ; i++)
 		header_mtime[i] = '0';
 
 	i = 0;
 
 	while(buffer[i] != '\0') {
-		header_mtime[SIZE_S - len - 1 + i] = buffer[i];
+		header_mtime[MTIME_S - len - 1 + i] = buffer[i];
 		i++;
 	}
 }
@@ -279,4 +278,15 @@ void fulfill_empty_space(char* string, int starting_point, int length) {
 	
 	for(i = starting_point; i < length; i++)
 		string[i] = '\0';
+}
+
+void calculate_checksum(FILE_HEADER* header) {
+	header->cksum[0] = '1';
+	header->cksum[1] = '1';
+	header->cksum[2] = '1';
+	header->cksum[3] = '1';
+	header->cksum[4] = '1';
+	header->cksum[5] = '1';
+	header->cksum[6] = '\0';
+	header->cksum[7] = ' ';
 }
