@@ -1,1 +1,0 @@
-void optget(int argc, char **argv);
