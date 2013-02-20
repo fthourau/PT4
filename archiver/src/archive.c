@@ -151,6 +151,7 @@ void build_archive_from_files(int number_of_arguments, char** files) {
 										fh.name, strerror(errno));
 		} while(i < number_of_arguments);
 		
+		fputc('\n', archive);
 		fclose(archive);
 		archive = NULL;
 	}

@@ -54,7 +54,6 @@ void build_ustar_header_from_file(FILE_HEADER* fh, char* filename) {
 		get_id(fh->gid, buffer.st_gid);
 		get_size(fh->size, buffer.st_size);
 		get_modification_time(fh->mtime, buffer.st_mtime);
-		
 		get_file_type(fh->typeflag, buffer.st_mode);
 		strcpy(fh->magic, "ustar ");
 		strcpy(fh->version, " \0");

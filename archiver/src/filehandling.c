@@ -281,12 +281,159 @@ void fulfill_empty_space(char* string, int starting_point, int length) {
 }
 
 void calculate_checksum(FILE_HEADER* header) {
-	header->cksum[0] = '1';
-	header->cksum[1] = '1';
-	header->cksum[2] = '1';
-	header->cksum[3] = '1';
-	header->cksum[4] = '1';
-	header->cksum[5] = '1';
+	int i = 0;
+	int j = 0;
+	int sum = 0;
+	int offset = 0;
+	char buffer[8];
+
+	while(j < HEADER_S) {
+		if(j < NAME_S) {
+			offset = NAME_S;
+			while(j < offset) {
+				sum += (int) header->name[i++];
+				j++;
+			}
+		}
+		else if(j < offset + MODE_S) {
+			offset += MODE_S;
+			i = 0;
+			while(j < offset) {
+				sum += (int) header->mode[i++];
+				j++;
+			}
+		}
+		else if(j < offset + UID_S) {
+			offset += UID_S;
+			i = 0;
+			while(j < offset) {
+				sum += (int) header->uid[i++];
+				j++;
+			}
+		}
+		else if(j < offset + GID_S) {
+			offset += GID_S;
+			i = 0;
+			while(j < offset) {
+				sum += (int) header->gid[i++];
+				j++;
+			}
+		}
+		else if(j < offset + SIZE_S) {
+			offset += SIZE_S;
+			i = 0;
+			while(j < offset) {
+				sum += (int) header->size[i++];
+				j++;
+			}
+		}
+		else if(j < offset + MTIME_S) {
+			offset += MTIME_S;
+			i = 0;
+			while(j < offset) {
+				sum += (int) header->mtime[i++];
+				j++;
+			}
+		}
+		else if(j < offset + CKSUM_S) {
+			offset += CKSUM_S;
+			i = 0;
+			while(j < offset) {
+				sum += (int) header->cksum[i++];
+				j++;
+			}
+		}
+		else if(j < offset + TYPEFLAG_S) {
+			offset += TYPEFLAG_S;
+			i = 0;
+			while(j < offset) {
+				sum += (int) header->typeflag[i++];
+				j++;
+			}
+		}
+		else if(j < offset + LINKNAME_S) {
+			offset += LINKNAME_S;
+			i = 0;
+			while(j < offset) {
+				sum += (int) header->linkname[i++];
+				j++;
+			}
+		}
+		else if(j < offset + MAGIC_S) {
+			offset += MAGIC_S;
+			i = 0;
+			while(j < offset) {
+				sum += (int) header->magic[i++];
+				j++;
+			}
+		}
+		else if(j < offset + VERSION_S) {
+			offset += VERSION_S;
+			i = 0;
+			while(j < offset) {
+				sum += (int) header->version[i++];
+				j++;
+			}
+		}
+		else if(j < offset + UNAME_S) {
+			offset += UNAME_S;
+			i = 0;
+			while(j < offset) {
+				sum += (int) header->uname[i++];
+				j++;
+			}
+		}
+		else if(j < offset + GNAME_S) {
+			offset += GNAME_S;
+			i = 0;
+			while(j < offset) {
+				sum += (int) header->gname[i++];
+				j++;
+			}
+		}
+		else if(j < offset + DEVMAJOR_S) {
+			offset += DEVMAJOR_S;
+			i = 0;
+			while(j < offset) {
+				sum += (int) header->devmajor[i++];
+				j++;
+			}
+		}
+		else if(j < offset + DEVMINOR_S) {
+			offset += DEVMINOR_S;
+			i = 0;
+			while(j < offset) {
+				sum += (int) header->devminor[i++];
+				j++;
+			}
+		}
+		else if(j < offset + PREFIX_S) {
+			offset += PREFIX_S;
+			i = 0;
+			while(j < offset) {
+				sum += (int) header->prefix[i++];
+				j++;
+			}
+		}
+		else if(j < offset + STUFFING_S) {
+			offset += STUFFING_S;
+			i = 0;
+			while(j < offset) {
+				sum += (int) header->stuffing[i++];
+				j++;
+			}
+		}
+	}
+
+	sprintf(buffer, "%d", sum);
+	sprintf(buffer, "%lld", dec2oct(buffer));
+
+	header->cksum[0] = '0';
+	header->cksum[1] = buffer[0];
+	header->cksum[2] = buffer[1];
+	header->cksum[3] = buffer[2];
+	header->cksum[4] = buffer[3];
+	header->cksum[5] = buffer[4];
 	header->cksum[6] = '\0';
 	header->cksum[7] = ' ';
 }
