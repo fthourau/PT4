@@ -49,6 +49,4 @@ void build_ustar_header_from_archive(FILE_HEADER* fh, FILE* archive);
 void build_ustar_header_from_file(FILE_HEADER* fh, char* filename);
 void write_header_to_archive(FILE_HEADER* fh, FILE* archive);
 
-void printf_header(FILE_HEADER fh);
-
 #endif

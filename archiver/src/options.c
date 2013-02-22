@@ -1,6 +1,6 @@
 #include "../head/options.h"
+
 #include <stdlib.h>
-#include <stdbool.h>
 
 // Default action is 'NO_ACTION', it does nothing
 action_t CURRENT_ACTION = NO_ACTION;

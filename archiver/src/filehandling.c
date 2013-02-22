@@ -7,6 +7,11 @@
 #include <sys/stat.h>
 #include <linux/kdev_t.h>
 
+// Prototypes of private functions
+char get_user_mode(mode_t mode);
+char get_group_mode(mode_t mode);
+char get_other_mode(mode_t mode);
+
 void get_prefix_and_name(char* full_path, char* filename, char* path) {
 	int length = strlen(full_path);
 	int i, j;
@@ -54,7 +59,7 @@ void get_prefix_and_name(char* full_path, char* filename, char* path) {
 	}
 }
 
-void file_mode_edit(char* header_mode, mode_t stat_mode) {
+void get_file_mode(char* header_mode, mode_t stat_mode) {
 	header_mode[0] = '0';
 	header_mode[1] = '0';
 	header_mode[2] = '0';
@@ -273,13 +278,6 @@ void get_device_numbers(char* devmajor, char* devminor, dev_t devnumber) {
 	sprintf(devminor, "%lld", dec2oct(buff));
 }
 
-void fulfill_empty_space(char* string, int starting_point, int length) {
-	int i;
-	
-	for(i = starting_point; i < length; i++)
-		string[i] = '\0';
-}
-
 void calculate_checksum(FILE_HEADER* header) {
 	int i = 0;
 	int j = 0;
@@ -436,4 +434,11 @@ void calculate_checksum(FILE_HEADER* header) {
 	header->cksum[5] = buffer[4];
 	header->cksum[6] = '\0';
 	header->cksum[7] = ' ';
+}
+
+void fulfill_empty_space(char* string, int starting_point, int length) {
+	int i;
+	
+	for(i = starting_point; i < length; i++)
+		string[i] = '\0';
 }
