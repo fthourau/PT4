@@ -30,7 +30,7 @@ void extract_files_from_archive(char* archive_path) {
 		build_ustar_header_from_archive(&header, archive);
 
 		do {
-			if(header.name != NULL && header.name[0] != '\0') {
+			if(header.name != NULL && (int)header.name[0] > 32) {
 				errno = 0;
 				
 				// Get size and create output file
@@ -60,12 +60,11 @@ void extract_files_from_archive(char* archive_path) {
 					fclose(output_file);
 					output_file = NULL;
 					recover_filestats(&header);
+					build_ustar_header_from_archive(&header, archive);
 				}
 				else
 					fprintf(stderr, "Extraction impossible sur '%s': %s\n", 
-							header.name, strerror(errno));
-
-				build_ustar_header_from_archive(&header, archive);
+												header.name, strerror(errno));
 			}
 			else
 				end_of_archive = true;
@@ -73,7 +72,6 @@ void extract_files_from_archive(char* archive_path) {
 
 		fclose(archive);
 		archive = NULL;
-		system("rm -f ?");
 	}
 	else
 		fprintf(stderr, "Fichier invalide '%s': %s\n", archive_path,
@@ -84,7 +82,6 @@ void recover_filestats(FILE_HEADER* header) {
 	// Recover the modification time
 	struct utimbuf times;
 	times.actime = time(NULL);
-	// times.modtime = time(NULL);
 	times.modtime = oct2dec(header->mtime);
 	utime(header->name, &times);
 

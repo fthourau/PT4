@@ -5,6 +5,7 @@
 #include "../head/extraction.h"
 #include "../head/optionhandling.h"
 #include "../head/options.h"
+#include "../head/utilitarian.h"
 
 int main(int argc, char** argv) {
 	if(argc > 1) {

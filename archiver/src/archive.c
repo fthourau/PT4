@@ -83,7 +83,7 @@ void build_archive_from_files(int number_of_arguments, char** files) {
 					}
 					fclose(current_file);
 					current_file = NULL;
-					fputc('\n', archive);
+					// fputc('\n', archive);
 				}
 				i++;
 			}
@@ -124,14 +124,14 @@ void list_files_from_archive(char* archive_path) {
 		build_ustar_header_from_archive(&header, archive);
 
 		do {
-			if(header.name != NULL && header.name[0] != '\0') {
+			if(header.name != NULL && (int)header.name[0] > 32) {
 				int filesize = oct2dec(header.size);
 
 				if(VERBOSE_FLAG)
 					get_file_info_verbose(header);
 				else {
 					if(header.prefix != NULL && header.prefix[0] != 0)
-						printf("%s/%s\n", header.prefix, header.name);
+						printf("%s%s\n", header.prefix, header.name);
 					else
 						printf("%s\n", header.name);
 				}

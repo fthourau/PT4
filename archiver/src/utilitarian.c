@@ -5,17 +5,15 @@
 #include <string.h>
 
 unsigned long long int oct2dec(char* c) {
-	unsigned int i = 0;
-	int n = strlen(c) - 1;
-	int result = 0;
+	int i;
+	int n = 0;
+	int length = strlen(c) - 1;
+	unsigned long long int result = 0;
 
-	// When browsing a char* table in C, getting the ith cell correspond to get
-	// all cells from i to the end. It's necessary to divide by power of 10.
-	// Cast to int the division is as well needed in order to avoid a 
-	// multiplication by a float.
-	for(i = 0; i < strlen(c); i++) {
-		result += ( ((int)(atoi(&c[i]) / pow(10, n))) * pow(8, n));
-		n--;
+	for(i = length ; i >= 0 ; i--) {
+		int l = ((int)c[i] % 48);
+		result += (l * pow(8, n));
+		n++;
 	}
 
 	return result;
