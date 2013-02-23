@@ -13,7 +13,7 @@ int main(int argc, char** argv) {
 
 		switch(CURRENT_ACTION) {
 			case CREATE:
-				build_archive_from_files(argc, argv);
+				build_or_add_archive_from_files(argc, argv,0);
 			break;
 			case LIST:
 				if(argv[2] != NULL)
@@ -23,7 +23,7 @@ int main(int argc, char** argv) {
 			break;
 			case ADD:
 				if(argv[2] != NULL && argv[3] != NULL)
-					add_files_to_archive(argc, argv);
+					build_or_add_archive_from_files(argc, argv,1);
 				else if(argv[3] == NULL)
 					fprintf(stderr, "Argument manquant: <fichier(s)>\n");
 				else

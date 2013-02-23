@@ -30,7 +30,7 @@ void get_file_info_verbose(FILE_HEADER fh) {
 	// touch -d "`date -d @1360884899 '+%Y-%m-%d %H:%M:%S'`" <filename>
 }
 
-void build_archive_from_files(int number_of_arguments, char** files) {
+void build_or_add_archive_from_files(int number_of_arguments, char** files, int type) {
 	FILE_HEADER fh;
 	FILE* archive = NULL;
 	FILE* current_file = NULL;
@@ -39,23 +39,31 @@ void build_archive_from_files(int number_of_arguments, char** files) {
 	size_t filesize;
 
 	errno = 0;
-
-	if(files[2] != NULL && is_tar_format(files[2])) {
-		archive = fopen(files[2], "w");
-		i = 3;
+	if(type == 1 && fopen(files[2], "r") != NULL){
+		archive = fopen(files[2], "a");
+		i=3;
 	}
-	else {
-		archive = fopen("archive.tar", "w");
-		i = 2;
+	else if (type != 1){
+		if(files[2] != NULL && is_tar_format(files[2])) {
+			archive = fopen(files[2], "w");
+			i = 3;
+		}
+		else {
+			archive = fopen("archive.tar", "w");
+			i = 2;
+		}
 	}
 
 	if(archive != NULL && errno == 0) {
 		errno = 0;
 
-		if(VERBOSE_FLAG && ARCHIVE_NAME_FLAG)
+		if(VERBOSE_FLAG && ARCHIVE_NAME_FLAG && type != 1)
 			printf("Creation of '%s' in progress ...\n", files[2]);
-		else if(VERBOSE_FLAG)
+		else if(VERBOSE_FLAG && type != 1)
 			printf("Creation of 'archive.tar' in progress ...\n");
+		else if(VERBOSE_FLAG)
+			printf("Add at 'archive.tar' of '%s' in progress ...\n", files[3]);
+
 
 		do {
 			current_file = fopen(files[i], "r");
@@ -157,72 +165,4 @@ void list_files_from_archive(char* archive_path) {
 	else
 		fprintf(stderr, "Fichier invalide '%s': %s\n", 
 											archive_path, strerror(errno));
-}
-
-void add_files_to_archive(int number_of_arguments, char** files) {
-	FILE_HEADER fh;
-	FILE* archive = NULL;
-	FILE* current_file = NULL;
-
-	int i;
-	unsigned int cursor_pos, nbr_of_block;
-	size_t filesize;
-
-	errno = 0;
-
-	if(files[2] != NULL)
-		archive = fopen(files[2], "a");
-
-	if(archive != NULL){
-		i=3;
-		do {
-			current_file = fopen(files[i], "r");
-			
-			if(current_file != NULL && errno == 0) {
-				build_ustar_header_from_file(&fh, files[i]);
-				write_header_to_archive(&fh, archive);
-				
-				if(fh.typeflag[0] == '0') {	// Only if it's a regular file
-					filesize = oct2dec(fh.size);
-
-					cursor_pos = 0;
-					nbr_of_block = filesize / BLOCK_SIZE;
-
-					if((filesize % BLOCK_SIZE) > 0)
-						nbr_of_block++;
-
-					while(cursor_pos < (BLOCK_SIZE * nbr_of_block)) {
-						if(cursor_pos >= filesize)
-							fputc('\0', archive);
-						else
-							fputc(fgetc(current_file), archive);
-						
-						cursor_pos++;
-					}
-					fclose(current_file);
-					current_file = NULL;
-					// fputc('\n', archive);
-				}
-				i++;
-			}
-			else
-				fprintf(stderr, "Erreur d'ouverture de '%s': %s\n", 
-										fh.name, strerror(errno));
-
-		} while(i < number_of_arguments);
-
-		for (int i = 0; i < BLOCK_SIZE; i++)
-		fputc('\0', archive);
-
-		fclose(archive);
-		archive = NULL;
-	}
-	else {
-		if(ARCHIVE_NAME_FLAG)
-			fprintf(stderr, "Fichier invalide '%s': %s\n", files[2],
-															strerror(errno));
-		else
-			fprintf(stderr, "Fichier invalide 'archive.tar': %s\n",
-															strerror(errno));
-	}
 }

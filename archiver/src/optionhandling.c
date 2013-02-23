@@ -79,11 +79,4 @@ void get_options(int argc, char **argv) {
 				abort();
 		}
 	}
-
-	if (optind < argc) {
-		while (optind < argc)
-			printf ("%s ", argv[optind++]);
-		
-		printf ("n'est pas une option\n");	
-	}
 }
