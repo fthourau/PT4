@@ -160,5 +160,69 @@ void list_files_from_archive(char* archive_path) {
 }
 
 void add_files_to_archive(int number_of_arguments, char** files) {
+	FILE_HEADER fh;
+	FILE* archive = NULL;
+	FILE* current_file = NULL;
 
+	int i;
+	unsigned int cursor_pos, nbr_of_block;
+	size_t filesize;
+
+	errno = 0;
+
+	if(files[2] != NULL)
+		archive = fopen(files[2], "a");
+
+	if(archive != NULL){
+		i=3;
+		do {
+			current_file = fopen(files[i], "r");
+			
+			if(current_file != NULL && errno == 0) {
+				build_ustar_header_from_file(&fh, files[i]);
+				write_header_to_archive(&fh, archive);
+				
+				if(fh.typeflag[0] == '0') {	// Only if it's a regular file
+					filesize = oct2dec(fh.size);
+
+					cursor_pos = 0;
+					nbr_of_block = filesize / BLOCK_SIZE;
+
+					if((filesize % BLOCK_SIZE) > 0)
+						nbr_of_block++;
+
+					while(cursor_pos < (BLOCK_SIZE * nbr_of_block)) {
+						if(cursor_pos >= filesize)
+							fputc('\0', archive);
+						else
+							fputc(fgetc(current_file), archive);
+						
+						cursor_pos++;
+					}
+					fclose(current_file);
+					current_file = NULL;
+					// fputc('\n', archive);
+				}
+				i++;
+			}
+			else
+				fprintf(stderr, "Erreur d'ouverture de '%s': %s\n", 
+										fh.name, strerror(errno));
+
+		} while(i < number_of_arguments);
+
+		for (int i = 0; i < BLOCK_SIZE; i++)
+		fputc('\0', archive);
+
+		fclose(archive);
+		archive = NULL;
+	}
+	else {
+		if(ARCHIVE_NAME_FLAG)
+			fprintf(stderr, "Fichier invalide '%s': %s\n", files[2],
+															strerror(errno));
+		else
+			fprintf(stderr, "Fichier invalide 'archive.tar': %s\n",
+															strerror(errno));
+	}
 }

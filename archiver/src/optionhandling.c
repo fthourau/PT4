@@ -4,7 +4,7 @@
 
 #include "../head/options.h"
 
-const int NB_OPTIONS = 8; //constante qui défini le nombre d'option
+const int NB_OPTIONS = 9; //constante qui défini le nombre d'option
 
 void get_options(int argc, char **argv) {
 	int c; //variable du switch (elle contient les caractères d'options)
@@ -44,7 +44,7 @@ void get_options(int argc, char **argv) {
 				printf ("\n");
 			break;
 			case 'a':
-				puts("option -a\n");
+				CURRENT_ACTION = ADD;
 			break;
 			case 'v':
 				VERBOSE_FLAG = true;
@@ -54,7 +54,6 @@ void get_options(int argc, char **argv) {
 			break;
 			case 'c':
 				CURRENT_ACTION = CREATE;
-				printf("option -c with value `%s'\n", optarg);
 			break;
 			case 'x' :
 				CURRENT_ACTION = EXTRACT;
