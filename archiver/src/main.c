@@ -5,6 +5,7 @@
 #include "../head/extraction.h"
 #include "../head/optionhandling.h"
 #include "../head/options.h"
+#include "../head/errors.h"
 #include "../head/utilitarian.h"
 
 int main(int argc, char** argv) {
@@ -13,7 +14,21 @@ int main(int argc, char** argv) {
 
 		switch(CURRENT_ACTION) {
 			case CREATE:
-				build_archive_from_files(argc, argv);
+				if(argc > 3) {
+					if(is_tar_format(argv[2]))
+						build_archive_from_files(argc, argv);
+					else
+						fprintf(stderr, "%s\n", 
+								get_error_message(WRONG_ARCHIVE_FORMAT_ERR));
+				}
+				else if(argc == 3) {
+					if(is_tar_format(argv[2]))
+						fprintf(stderr, "Argument manquant: <fichier(s)>\n");
+					else
+						fprintf(stderr, "Un nom d'archive suffixé par '.tar' est nécessaire après les options.'\n");
+				}
+				else
+					fprintf(stderr, "Arguments manquants: <archive> <fichier(s)>\n");
 			break;
 			case LIST:
 				if(argv[2] != NULL)

@@ -54,7 +54,6 @@ void get_options(int argc, char **argv) {
 			break;
 			case 'c':
 				CURRENT_ACTION = CREATE;
-				printf("option -c with value `%s'\n", optarg);
 			break;
 			case 'x' :
 				CURRENT_ACTION = EXTRACT;
@@ -81,10 +80,10 @@ void get_options(int argc, char **argv) {
 		}
 	}
 
-	if (optind < argc) {
-		while (optind < argc)
+	/*if(optind < argc) {
+		while(optind < argc)
 			printf ("%s ", argv[optind++]);
 		
 		printf ("n'est pas une option\n");	
-	}
+	}*/
 }

@@ -52,10 +52,8 @@ void build_archive_from_files(int number_of_arguments, char** files) {
 	if(archive != NULL && errno == 0) {
 		errno = 0;
 
-		if(VERBOSE_FLAG && ARCHIVE_NAME_FLAG)
+		if(VERBOSE_FLAG)
 			printf("Creation of '%s' in progress ...\n", files[2]);
-		else if(VERBOSE_FLAG)
-			printf("Creation of 'archive.tar' in progress ...\n");
 
 		do {
 			current_file = fopen(files[i], "r");
