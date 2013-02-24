@@ -8,7 +8,8 @@ INC_DIR = head
 # All objects created
 OBJECTS = $(OBJ_DIR)/main.o $(OBJ_DIR)/utilitarian.o $(OBJ_DIR)/ustarheader.o \
 		 	$(OBJ_DIR)/options.o $(OBJ_DIR)/archive.o $(OBJ_DIR)/extraction.o \
-		 	$(OBJ_DIR)/optionhandling.o $(OBJ_DIR)/filehandling.o
+		 	$(OBJ_DIR)/optionhandling.o $(OBJ_DIR)/filehandling.o \
+		 	$(OBJ_DIR)/errors.o
 
 # Compiler and compilation's options
 CC = gcc
@@ -46,6 +47,9 @@ $(OBJ_DIR)/optionhandling.o: $(SRC_DIR)/optionhandling.c $(INC_DIR)/optionhandli
 		$(CC) $(CNORM) -c $< -o $@ $(CFLAGS)
 
 $(OBJ_DIR)/filehandling.o: $(SRC_DIR)/filehandling.c $(INC_DIR)/filehandling.h
+		$(CC) $(CNORM) -c $< -o $@ $(CFLAGS)
+
+$(OBJ_DIR)/errors.o: $(SRC_DIR)/errors.c $(INC_DIR)/errors.h
 		$(CC) $(CNORM) -c $< -o $@ $(CFLAGS)
 
 clean:

@@ -1,1 +1,49 @@
-truc
+NOM
+	tar
+
+SYNOPSIS
+	tar [-] c --create | d --delete | f --file | h --help | m --diff | r --add | s --sparse | t --list | u --update | x --extract | z --compress
+	./tar -cvf archive.tar fichier1 fichier2 ...
+	./tar -t archive.tar
+
+DESCRIPTION
+	Tar permet de stocker des fichiers dans une archive au format de même nom.
+
+	Le premier argument doit être "./tar" suivi d'au moins une lettre d'option puis du ou des noms de fichiers.
+
+ACTION DES OPTIONS
+	Actions principales:
+		-c, --create
+			Créé une archive (sans pour autant créer un fichier de sortie).
+
+		-d, --delete
+			Supprime un ou plusieurs fichiers de l'archive.
+
+		-f, --file
+			Créé un fichier de sortie.
+
+		-r, --add
+			Ajoute un ou plusieurs fichiers à l'archive
+
+		-t, --list
+			Liste le contenu de l'archive.
+
+		-u, --update
+			Met à jour le contenu de l'archive si les fichiers en paramètre sont plus récents.
+
+		-x, --extract
+			Extrait le contenu de l'archive à l'emplacement de celle-ci.
+
+	Actions secondaires:
+
+		-h, --help
+			Affiche la page du manuel de la commande.
+
+		-m, --diff
+			Affiche les différences entre un fichier de l'archive et de même nom.
+
+		-s, --sparse
+			Economise l'espace lorsque les fichiers comportent de longues successions de zéros.
+
+		-z, --compress
+			Après l'archivage, le tar est compressé sous format bz2.

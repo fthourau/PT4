@@ -49,18 +49,12 @@ void build_or_add_archive_from_files(int number_of_arguments, char** files, int 
 			archive = fopen(files[2], "w");
 			i = 3;
 		}
-		else {
-			archive = fopen("archive.tar", "w");
-			i = 2;
-		}
 	}
 
 	if(archive != NULL && errno == 0) {
 		errno = 0;
 
-		if(VERBOSE_FLAG)
-			printf("Creation of '%s' in progress ...\n", files[2]);
-		if(VERBOSE_FLAG && ARCHIVE_NAME_FLAG && type != 1)
+		if(VERBOSE_FLAG && MAKE_ARCHIVE_FLAG && type != 1)
 			printf("Creation of '%s' in progress ...\n", files[2]);
 		else if(VERBOSE_FLAG && type != 1)
 			printf("Creation of 'archive.tar' in progress ...\n");
@@ -109,7 +103,7 @@ void build_or_add_archive_from_files(int number_of_arguments, char** files, int 
 		archive = NULL;
 	}
 	else {
-		if(ARCHIVE_NAME_FLAG)
+		if(MAKE_ARCHIVE_FLAG)
 			fprintf(stderr, "Fichier invalide '%s': %s\n", files[2],
 															strerror(errno));
 		else
@@ -167,8 +161,4 @@ void list_files_from_archive(char* archive_path) {
 	else
 		fprintf(stderr, "Fichier invalide '%s': %s\n", 
 											archive_path, strerror(errno));
-}
-
-void add_files_to_archive(int number_of_arguments, char** files) {
-
 }

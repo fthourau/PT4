@@ -18,31 +18,30 @@ int main(int argc, char** argv) {
 					if(is_tar_format(argv[2]))
 						build_or_add_archive_from_files(argc, argv, 0);
 					else
-						fprintf(stderr, "%s\n", 
-								get_error_message(WRONG_ARCHIVE_FORMAT_ERR));
+						fprintf(stderr, "%s\n", WRONG_ARCHIVE_FORMAT_ERR);
 				}
 				else if(argc == 3) {
 					if(is_tar_format(argv[2]))
-						fprintf(stderr, "Argument manquant: <fichier(s)>\n");
+						fprintf(stderr, "%s\n", FILE_ARG_MISSING_ERR);
 					else
-						fprintf(stderr, "Un nom d'archive suffixé par '.tar' est nécessaire après les options.'\n");
+						fprintf(stderr, "%s\n", WRONG_ARCHIVE_FORMAT_ERR);
 				}
 				else
-					fprintf(stderr, "Arguments manquants: <archive> <fichier(s)>\n");
+					fprintf(stderr, "%s\n", ALL_ARG_MISSING_ERR);
 			break;
 			case LIST:
 				if(argv[2] != NULL)
 					list_files_from_archive(argv[2]);
 				else
-					fprintf(stderr, "Argument manquant: <archive>\n");
+					fprintf(stderr, "%s\n", ARCHIVE_ARG_MISSING_ERR);
 			break;
 			case ADD:
 				if(argv[2] != NULL && argv[3] != NULL)
 					build_or_add_archive_from_files(argc, argv,1);
 				else if(argv[3] == NULL)
-					fprintf(stderr, "Argument manquant: <fichier(s)>\n");
+					fprintf(stderr, "%s\n", FILE_ARG_MISSING_ERR);
 				else
-					fprintf(stderr, "Argument manquant: <archive>\n");
+					fprintf(stderr, "%s\n", ARCHIVE_ARG_MISSING_ERR);
 			break;
 			case UPDATE:
 			break;
@@ -50,7 +49,7 @@ int main(int argc, char** argv) {
 				if(argv[2] != NULL)
 					extract_files_from_archive(argv[2]);
 				else
-					fprintf(stderr, "Argument manquant: <archive>\n");
+					fprintf(stderr, "%s\n", ARCHIVE_ARG_MISSING_ERR);
 			break;
 			case DELETE:
 			break;
@@ -58,12 +57,12 @@ int main(int argc, char** argv) {
 				system("cat help.man | more");
 			break;
 			case NO_ACTION:
-				fprintf(stderr, "Aucune action à effectuer ...\n");
+				fprintf(stderr, "%s\n", NO_ACTION_ERR);
 			break;
 		}
 	}
 	else
-		fprintf(stderr, "Aucun argument: 'tar -h' pour voir le manuel ...\n");
+		fprintf(stderr, "%s\n", NO_ARGUMENT_ERR);
 
 	return EXIT_SUCCESS;
 }

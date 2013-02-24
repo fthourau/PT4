@@ -6,7 +6,6 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-
 // Prototypes of private functions
 void printf_header(FILE_HEADER* fh);
 void clean_up_header(FILE_HEADER* header);
