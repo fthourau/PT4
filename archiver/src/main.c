@@ -16,7 +16,7 @@ int main(int argc, char** argv) {
 			case CREATE:
 				if(argc > 3) {
 					if(is_tar_format(argv[2]))
-						build_archive_from_files(argc, argv);
+						build_or_add_archive_from_files(argc, argv, 0);
 					else
 						fprintf(stderr, "%s\n", 
 								get_error_message(WRONG_ARCHIVE_FORMAT_ERR));
@@ -38,7 +38,7 @@ int main(int argc, char** argv) {
 			break;
 			case ADD:
 				if(argv[2] != NULL && argv[3] != NULL)
-					add_files_to_archive(argc, argv);
+					build_or_add_archive_from_files(argc, argv,1);
 				else if(argv[3] == NULL)
 					fprintf(stderr, "Argument manquant: <fichier(s)>\n");
 				else

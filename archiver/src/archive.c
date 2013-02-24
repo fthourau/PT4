@@ -30,7 +30,7 @@ void get_file_info_verbose(FILE_HEADER fh) {
 	// touch -d "`date -d @1360884899 '+%Y-%m-%d %H:%M:%S'`" <filename>
 }
 
-void build_archive_from_files(int number_of_arguments, char** files) {
+void build_or_add_archive_from_files(int number_of_arguments, char** files, int type) {
 	FILE_HEADER fh;
 	FILE* archive = NULL;
 	FILE* current_file = NULL;
@@ -44,9 +44,15 @@ void build_archive_from_files(int number_of_arguments, char** files) {
 		archive = fopen(files[2], "w");
 		i = 3;
 	}
-	else {
-		archive = fopen("archive.tar", "w");
-		i = 2;
+	else if (type != 1){
+		if(files[2] != NULL && is_tar_format(files[2])) {
+			archive = fopen(files[2], "w");
+			i = 3;
+		}
+		else {
+			archive = fopen("archive.tar", "w");
+			i = 2;
+		}
 	}
 
 	if(archive != NULL && errno == 0) {
@@ -54,6 +60,12 @@ void build_archive_from_files(int number_of_arguments, char** files) {
 
 		if(VERBOSE_FLAG)
 			printf("Creation of '%s' in progress ...\n", files[2]);
+		if(VERBOSE_FLAG && ARCHIVE_NAME_FLAG && type != 1)
+			printf("Creation of '%s' in progress ...\n", files[2]);
+		else if(VERBOSE_FLAG && type != 1)
+			printf("Creation of 'archive.tar' in progress ...\n");
+		else if(VERBOSE_FLAG)
+			printf("Add at 'archive.tar' of '%s' in progress ...\n", files[3]);
 
 		do {
 			current_file = fopen(files[i], "r");
