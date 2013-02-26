@@ -1,10 +1,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "../head/options.h"
 #include "../head/archive.h"
 #include "../head/extraction.h"
 #include "../head/optionhandling.h"
-#include "../head/options.h"
 #include "../head/errors.h"
 #include "../head/utilitarian.h"
 
@@ -15,13 +15,13 @@ int main(int argc, char** argv) {
 		switch(CURRENT_ACTION) {
 			case CREATE:
 				if(argc > 3) {
-					if(is_tar_format(argv[2]))
-						build_or_add_archive_from_files(argc, argv, 0);
+					if(is_tar_format(argv[first_argument_position]))
+						build_or_add_archive_from_files(argc, argv);
 					else
 						fprintf(stderr, "%s\n", WRONG_ARCHIVE_FORMAT_ERR);
 				}
 				else if(argc == 3) {
-					if(is_tar_format(argv[2]))
+					if(is_tar_format(argv[first_argument_position]))
 						fprintf(stderr, "%s\n", FILE_ARG_MISSING_ERR);
 					else
 						fprintf(stderr, "%s\n", WRONG_ARCHIVE_FORMAT_ERR);
@@ -37,7 +37,7 @@ int main(int argc, char** argv) {
 			break;
 			case ADD:
 				if(argv[2] != NULL && argv[3] != NULL)
-					build_or_add_archive_from_files(argc, argv,1);
+					build_or_add_archive_from_files(argc, argv);
 				else if(argv[3] == NULL)
 					fprintf(stderr, "%s\n", FILE_ARG_MISSING_ERR);
 				else

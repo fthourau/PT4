@@ -18,6 +18,9 @@ typedef enum ACTION_T {
 // Action that will be choose by the user
 extern action_t CURRENT_ACTION;
 
+// Position of the first argument
+extern int first_argument_position;
+
 // Options' flags
 extern bool VERBOSE_FLAG;
 extern bool MAKE_ARCHIVE_FLAG;

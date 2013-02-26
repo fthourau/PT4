@@ -9,8 +9,9 @@
 #include <sys/unistd.h>
 #include <fcntl.h>
 
-#include "../head/archive.h"
 #include "../head/options.h"
+#include "../head/archive.h"
+#include "../head/errors.h"
 #include "../head/ustarheader.h"
 #include "../head/utilitarian.h"
 
@@ -30,46 +31,55 @@ void get_file_info_verbose(FILE_HEADER fh) {
 	// touch -d "`date -d @1360884899 '+%Y-%m-%d %H:%M:%S'`" <filename>
 }
 
-void build_or_add_archive_from_files(int number_of_arguments, char** files, int type) {
-	FILE_HEADER fh;
+void build_or_add_archive_from_files(int number_of_arguments, char** files) {
+	FILE_HEADER header;
 	FILE* archive = NULL;
 	FILE* current_file = NULL;
-	int i;
+	int i = first_argument_position + 1;
 	unsigned int cursor_pos, nbr_of_block;
 	size_t filesize;
 
 	errno = 0;
 
-	if(files[2] != NULL && is_tar_format(files[2])) {
-		archive = fopen(files[2], "w");
-		i = 3;
-	}
-	else if (type != 1){
-		if(files[2] != NULL && is_tar_format(files[2])) {
-			archive = fopen(files[2], "w");
-			i = 3;
-		}
+	if(files[first_argument_position] != NULL && 
+		is_tar_format(files[first_argument_position])) {
+		if(CURRENT_ACTION == CREATE)
+			archive = fopen(files[first_argument_position], "w");
+		else
+			archive = fopen(files[first_argument_position], "r+");
 	}
 
 	if(archive != NULL && errno == 0) {
 		errno = 0;
 
-		if(VERBOSE_FLAG && MAKE_ARCHIVE_FLAG && type != 1)
-			printf("Creation of '%s' in progress ...\n", files[2]);
-		else if(VERBOSE_FLAG && type != 1)
-			printf("Creation of 'archive.tar' in progress ...\n");
-		else if(VERBOSE_FLAG)
-			printf("Add at 'archive.tar' of '%s' in progress ...\n", files[3]);
+		// In order to delete ending block of null-terminated
+		if(CURRENT_ACTION == ADD)
+			fseek(archive, -BLOCK_SIZE, SEEK_END);	
+
+		if(VERBOSE_FLAG && MAKE_ARCHIVE_FLAG) {
+			if(CURRENT_ACTION == CREATE)
+				printf("Création de l'archive '%s' en cours ...\n",
+											files[first_argument_position]);
+			else if(CURRENT_ACTION == ADD)
+				printf("Ajout à '%s' en cours ...\n",
+											files[first_argument_position]);
+		}
 
 		do {
 			current_file = fopen(files[i], "r");
 			
 			if(current_file != NULL && errno == 0) {
-				build_ustar_header_from_file(&fh, files[i]);
-				write_header_to_archive(&fh, archive);
+				build_ustar_header_from_file(&header, files[i]);
+
+				if(MAKE_ARCHIVE_FLAG && VERBOSE_FLAG) {
+					write_header_to_archive(&header, archive);
+					printf("===> %s ajouté à l'archive.\n", header.name);
+				}
+				else
+					printf_header(&header);
 				
-				if(fh.typeflag[0] == '0') {	// Only if it's a regular file
-					filesize = oct2dec(fh.size);
+				if(header.typeflag[0] == '0') {	// Only if it's a regular file
+					filesize = oct2dec(header.size);
 
 					cursor_pos = 0;
 					nbr_of_block = filesize / BLOCK_SIZE;
@@ -78,38 +88,40 @@ void build_or_add_archive_from_files(int number_of_arguments, char** files, int 
 						nbr_of_block++;
 
 					while(cursor_pos < (BLOCK_SIZE * nbr_of_block)) {
-						if(cursor_pos >= filesize)
-							fputc('\0', archive);
-						else
-							fputc(fgetc(current_file), archive);
+						if(MAKE_ARCHIVE_FLAG) {
+							if(cursor_pos >= filesize)
+								fputc('\0', archive);
+							else
+								fputc(fgetc(current_file), archive);
+						}
+						else {
+							if(cursor_pos < filesize)
+								printf("%c", fgetc(current_file));
+						}
 						
 						cursor_pos++;
 					}
+
 					fclose(current_file);
 					current_file = NULL;
-					// fputc('\n', archive);
 				}
-				i++;
 			}
 			else
-				fprintf(stderr, "Erreur d'ouverture de '%s': %s\n", 
-										fh.name, strerror(errno));
+				fprintf(stderr, "%s '%s': %s\n", OPENING_ERR, header.name,
+															strerror(errno));
+
+			i++;
 		} while(i < number_of_arguments);
 
-		for (int i = 0; i < BLOCK_SIZE; i++)
+		for(i = 0; i < BLOCK_SIZE; i++)
 			fputc('\0', archive);
 
 		fclose(archive);
 		archive = NULL;
 	}
-	else {
-		if(MAKE_ARCHIVE_FLAG)
-			fprintf(stderr, "Fichier invalide '%s': %s\n", files[2],
+	else
+		fprintf(stderr, "%s '%s': %s\n", INVALID_FILE_ERR, files[2], 
 															strerror(errno));
-		else
-			fprintf(stderr, "Fichier invalide 'archive.tar': %s\n",
-															strerror(errno));
-	}
 }
 
 void list_files_from_archive(char* archive_path) {
@@ -158,7 +170,8 @@ void list_files_from_archive(char* archive_path) {
 				end_of_archive = true;
 		} while(!end_of_archive);
 	}
-	else
-		fprintf(stderr, "Fichier invalide '%s': %s\n", 
-											archive_path, strerror(errno));
+	else {
+		fprintf(stderr, "%s '%s': %s\n", INVALID_FILE_ERR, archive_path,
+															strerror(errno));
+	}
 }

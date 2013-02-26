@@ -25,7 +25,7 @@ void extract_files_from_archive(char* archive_path) {
 		bool end_of_archive = false;
 
 		if(VERBOSE_FLAG)
-			printf("Retrieval in progress ...\n");
+			printf("Extraction en cours ...\n");
 
 		build_ustar_header_from_archive(&header, archive);
 
@@ -55,7 +55,7 @@ void extract_files_from_archive(char* archive_path) {
 					}
 
 					if(VERBOSE_FLAG)
-						printf("Extracted: %s\n", header.name);
+						printf("Extrait: %s\n", header.name);
 
 					fclose(output_file);
 					output_file = NULL;

@@ -7,7 +7,6 @@
 #include <sys/types.h>
 
 // Prototypes of private functions
-void printf_header(FILE_HEADER* fh);
 void clean_up_header(FILE_HEADER* header);
 
 void build_ustar_header_from_archive(FILE_HEADER* header, FILE* file) {
@@ -78,27 +77,27 @@ void write_header_to_archive(FILE_HEADER* header, FILE* archive) {
 	fwrite(header->stuffing, STUFFING_S, 1, archive);
 }
 
-// Private functions
-
 void printf_header(FILE_HEADER* header) {
-	printf("NAME: %s\n", header->name);
-	printf("MODE: %s\n", header->mode);
-	printf("UID: %s\n", header->uid);
-	printf("GID: %s\n", header->gid);
-	printf("SIZE: %s\n", header->size);
-	printf("MTIME: %s\n", header->mtime);
-	printf("CKSUM: %s\n", header->cksum);
-	printf("TYPEFLAG: %s\n", header->typeflag);
-	printf("LINKNAME: %s\n", header->linkname);
-	printf("MAGIC: %s\n", header->magic);
-	printf("VERSION: %s\n", header->version);
-	printf("UNAME: %s\n", header->uname);
-	printf("GNAME: %s\n", header->gname);
-	printf("DEVMAJOR: %s\n", header->devmajor);
-	printf("DEVMINOR: %s\n", header->devminor);
-	printf("PREFIX: %s\n", header->prefix);
-	printf("STUFFING: %s\n", header->stuffing);
+	printf("%s", header->name);
+	printf("%s", header->mode);
+	printf("%s", header->uid);
+	printf("%s", header->gid);
+	printf("%s", header->size);
+	printf("%s", header->mtime);
+	printf("%s", header->cksum);
+	printf("%s", header->typeflag);
+	printf("%s", header->linkname);
+	printf("%s", header->magic);
+	printf("%s", header->version);
+	printf("%s", header->uname);
+	printf("%s", header->gname);
+	printf("%s", header->devmajor);
+	printf("%s", header->devminor);
+	printf("%s", header->prefix);
+	printf("%s", header->stuffing);
 }
+
+// Private functions
 
 void clean_up_header(FILE_HEADER* header) {
 	fulfill_empty_space(header->name, 0, NAME_S);

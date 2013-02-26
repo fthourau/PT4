@@ -11,3 +11,6 @@ const char NO_ARGUMENT_ERR[100] = {
 						"Aucun argument: 'tar -h' pour voir le manuel ...\0"};
 const char UNKNOWN_OPTION_ERR[100] = {
 				"Option(s) erronée(s): 'tar -h' pour voir le manuel ...\0"};
+
+const char OPENING_ERR[100] = {"Erreur d'ouverture\0"};
+const char INVALID_FILE_ERR[100] = {"Fichier invalide\0"};
