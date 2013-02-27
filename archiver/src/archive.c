@@ -145,8 +145,7 @@ void build_or_add_archive_from_files(int number_of_arguments, char** files) {
 				}
 			}
 			else
-				fprintf(stderr, "%s '%s': %s\n", OPENING_ERR, header.name,
-															strerror(errno));
+				position(files);
 
 			i++;
 		} while(i < number_of_arguments);
@@ -166,6 +165,8 @@ void build_or_add_archive_from_files(int number_of_arguments, char** files) {
 }
 
 void delete_files_from_archive(int argc,char** files){
+	
+	position(files);
 
 }
 

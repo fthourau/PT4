@@ -22,6 +22,7 @@ unsigned long long int oct2dec(char* c) {
 int position(char** files){
 	FILE* archive = fopen(files[2], "r");
 	int taille = strlen(files[3]), trouve = 0, pos = 0, position = 0;
+	FILE *f = fopen("debut", "w");
 	char c;
 	
 	if(archive != NULL){
@@ -33,14 +34,16 @@ int position(char** files){
 				fseek(archive,-pos,SEEK_CUR);
 				pos=0;
 			}
+
 			trouve = (pos==taille);
 			//subtraction of the size else this display the last 
 			//character of the word and not the position of the word
 			position = ftell(archive)-taille; 
+			fprintf(f,"%c",c);
 		}
 		fclose(archive);
-		return position; //return the position of the word in the file
 	}
+		return position; //return the position of the word in the file
 }
 
 unsigned long long int dec2oct(char* c) {
