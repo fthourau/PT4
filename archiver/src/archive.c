@@ -15,6 +15,29 @@
 #include "../head/ustarheader.h"
 #include "../head/utilitarian.h"
 
+// Research if a file named "prefix/filename" is present inside the archive
+// If it's present, return the position of the cursor just before the header
+// otherwise returns -1
+/*int file_is_present(char* filename, char* prefix, FILE* archive) {
+	bool end_of_archive = false;
+	FILE_HEADER header;
+	size_t filesize;
+
+	do {
+		build_ustar_header_from_archive(&header, archive);
+
+		if(header.name != NULL && (int)header.name[0] > 32) {
+			filesize = oct2dec(header.size);
+			nbr_of_block = calculate_number_of_block(filesize);
+			cursor_offset = (BLOCK_SIZE * nbr_of_block);
+			fseek(archive, cursor_offset, SEEK_CUR);
+			build_ustar_header_from_archive(&header, archive);
+		}
+		else
+			end_of_archive = true;
+	} while(!end_of_archive);
+}
+*/
 void get_file_info_verbose(FILE_HEADER fh) {
 	/*printf( (S_ISDIR(fileStat.st_mode)) ? "d" : "-");
     printf( (fileStat.st_mode & S_IRUSR) ? "r" : "-");
@@ -31,6 +54,19 @@ void get_file_info_verbose(FILE_HEADER fh) {
 	// touch -d "`date -d @1360884899 '+%Y-%m-%d %H:%M:%S'`" <filename>
 }
 
+// This function calculates the number of 512 bytes block according to the
+// filesize
+unsigned int calculate_number_of_block(size_t filesize) {
+	unsigned int nbr_of_block = filesize / BLOCK_SIZE;
+
+	if((filesize % BLOCK_SIZE) > 0)
+		nbr_of_block++;
+
+	return nbr_of_block;
+}
+
+// This function is made for building an archive (or adding to an existing one
+// ) from a list of files
 void build_or_add_archive_from_files(int number_of_arguments, char** files) {
 	FILE_HEADER header;
 	FILE* archive = NULL;
@@ -41,8 +77,7 @@ void build_or_add_archive_from_files(int number_of_arguments, char** files) {
 
 	errno = 0;
 
-	if(files[first_argument_position] != NULL && 
-		is_tar_format(files[first_argument_position])) {
+	if(files[first_argument_position] != NULL) {
 		if(CURRENT_ACTION == CREATE)
 			archive = fopen(files[first_argument_position], "w");
 		else
@@ -71,21 +106,21 @@ void build_or_add_archive_from_files(int number_of_arguments, char** files) {
 			if(current_file != NULL && errno == 0) {
 				build_ustar_header_from_file(&header, files[i]);
 
-				if(MAKE_ARCHIVE_FLAG && VERBOSE_FLAG) {
+				if(MAKE_ARCHIVE_FLAG) {
 					write_header_to_archive(&header, archive);
-					printf("===> %s ajouté à l'archive.\n", header.name);
+
+					if(VERBOSE_FLAG)
+						printf("===> %s ajouté à l'archive.\n", header.name);
 				}
 				else
 					printf_header(&header);
 				
-				if(header.typeflag[0] == '0') {	// Only if it's a regular file
+				// Only if it's a regular file
+				if(header.typeflag[0] == '0') {
 					filesize = oct2dec(header.size);
 
 					cursor_pos = 0;
-					nbr_of_block = filesize / BLOCK_SIZE;
-
-					if((filesize % BLOCK_SIZE) > 0)
-						nbr_of_block++;
+					nbr_of_block = calculate_number_of_block(filesize);
 
 					while(cursor_pos < (BLOCK_SIZE * nbr_of_block)) {
 						if(MAKE_ARCHIVE_FLAG) {
@@ -118,6 +153,9 @@ void build_or_add_archive_from_files(int number_of_arguments, char** files) {
 
 		fclose(archive);
 		archive = NULL;
+
+		if(COMPRESS_FLAG)
+			compress_with_gzip(files[first_argument_position]);
 	}
 	else
 		fprintf(stderr, "%s '%s': %s\n", INVALID_FILE_ERR, files[2], 
@@ -133,8 +171,7 @@ void list_files_from_archive(char* archive_path) {
 			printf("Listage du contenu de '%s':\n", archive_path);
 
 		FILE_HEADER header;
-		unsigned int cursor_offset;
-		unsigned int nbr_of_block;
+		unsigned int cursor_offset, nbr_of_block;
 		bool end_of_archive = false;
 
 		build_ustar_header_from_archive(&header, archive);
@@ -145,18 +182,11 @@ void list_files_from_archive(char* archive_path) {
 
 				if(VERBOSE_FLAG)
 					get_file_info_verbose(header);
-				else {
-					if(header.prefix != NULL && header.prefix[0] != 0)
-						printf("%s%s\n", header.prefix, header.name);
-					else
-						printf("%s\n", header.name);
-				}
+				else
+					printf("%s%s\n", header.prefix, header.name);
 
 				// Figuring out number of file content's block for the offset
-				nbr_of_block = filesize / BLOCK_SIZE;
-
-				if((filesize % BLOCK_SIZE) > 0)
-					nbr_of_block++;
+				nbr_of_block = calculate_number_of_block(filesize);
 
 				cursor_offset = (BLOCK_SIZE * nbr_of_block);
 

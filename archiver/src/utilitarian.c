@@ -76,3 +76,12 @@ bool is_tar_format(char* archive_to_check) {
 			 (archive_to_check[len - 2] == 'a') &&
 			 (archive_to_check[len - 1] == 'r') );
 }
+
+void compress_with_gzip(char* filename) {
+	char commandline[256] = { "gzip -c " };
+	strcat(commandline, filename);
+	strcat(commandline, " > ");
+	strcat(commandline, filename);
+	strcat(commandline, ".gz");
+	system(commandline);
+}

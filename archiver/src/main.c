@@ -14,40 +14,32 @@ int main(int argc, char** argv) {
 
 		switch(CURRENT_ACTION) {
 			case CREATE:
-				if(argc > 3) {
-					if(is_tar_format(argv[first_argument_position]))
-						build_or_add_archive_from_files(argc, argv);
-					else
-						fprintf(stderr, "%s\n", WRONG_ARCHIVE_FORMAT_ERR);
-				}
-				else if(argc == 3) {
-					if(is_tar_format(argv[first_argument_position]))
-						fprintf(stderr, "%s\n", FILE_ARG_MISSING_ERR);
-					else
-						fprintf(stderr, "%s\n", WRONG_ARCHIVE_FORMAT_ERR);
-				}
+				if(argc > 3)
+					build_or_add_archive_from_files(argc, argv);
+				else if(argc == 3)
+					fprintf(stderr, "%s\n", FILE_ARG_MISSING_ERR);
 				else
 					fprintf(stderr, "%s\n", ALL_ARG_MISSING_ERR);
 			break;
 			case LIST:
-				if(argv[2] != NULL)
-					list_files_from_archive(argv[2]);
+				if(argv[first_argument_position] != NULL)
+					list_files_from_archive(argv[first_argument_position]);
 				else
 					fprintf(stderr, "%s\n", ARCHIVE_ARG_MISSING_ERR);
 			break;
 			case ADD:
-				if(argv[2] != NULL && argv[3] != NULL)
+				if(argc > 3)
 					build_or_add_archive_from_files(argc, argv);
-				else if(argv[3] == NULL)
+				else if(argc == 3)
 					fprintf(stderr, "%s\n", FILE_ARG_MISSING_ERR);
 				else
-					fprintf(stderr, "%s\n", ARCHIVE_ARG_MISSING_ERR);
+					fprintf(stderr, "%s\n", ALL_ARG_MISSING_ERR);
 			break;
 			case UPDATE:
 			break;
 			case EXTRACT:
-				if(argv[2] != NULL)
-					extract_files_from_archive(argv[2]);
+				if(argv[first_argument_position] != NULL)
+					extract_files_from_archive(argv[first_argument_position]);
 				else
 					fprintf(stderr, "%s\n", ARCHIVE_ARG_MISSING_ERR);
 			break;
