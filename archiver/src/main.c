@@ -44,6 +44,8 @@ int main(int argc, char** argv) {
 					fprintf(stderr, "%s\n", ARCHIVE_ARG_MISSING_ERR);
 			break;
 			case DELETE:
+			if(argv[2] != NULL)
+				delete_files_from_archive(argc,argv);
 			break;
 			case HELP:
 				system("cat help.man | more");

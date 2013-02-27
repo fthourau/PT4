@@ -18,7 +18,7 @@
 // Research if a file named "prefix/filename" is present inside the archive
 // If it's present, return the position of the cursor just before the header
 // otherwise returns -1
-int file_is_present(char* filename, char* prefix, FILE* archive) {
+/*int file_is_present(char* filename, char* prefix, FILE* archive) {
 	bool end_of_archive = false;
 	FILE_HEADER header;
 	size_t filesize;
@@ -39,7 +39,7 @@ int file_is_present(char* filename, char* prefix, FILE* archive) {
 		else
 			end_of_archive = true;
 	} while(!end_of_archive);
-}
+}*/
 
 void get_file_info_verbose(FILE_HEADER fh) {
 	/*printf( (S_ISDIR(fileStat.st_mode)) ? "d" : "-");
@@ -165,13 +165,17 @@ void build_or_add_archive_from_files(int number_of_arguments, char** files) {
 															strerror(errno));
 }
 
+void delete_files_from_archive(int argc,char** files){
+
+}
+
 void list_files_from_archive(char* archive_path) {
 	errno = 0;
 	FILE* archive = fopen(archive_path, "r");
 
 	if(archive != NULL && errno == 0) {
 		if(VERBOSE_FLAG)
-			printf("Listage du contenu de '%s':\n", archive_path);
+			printf("Listage du contenu de '%s':\nition", archive_path);
 
 		FILE_HEADER header;
 		unsigned int cursor_offset, nbr_of_block;
