@@ -19,7 +19,9 @@ unsigned long long int oct2dec(char* c) {
 	return result;
 }
 
-int position(char** files){
+int files_end(char** files){
+}
+int files_begin(char** files){
 	FILE* archive = fopen(files[2], "r");
 	int taille = strlen(files[3]), trouve = 0, pos = 0, position = 0;
 	FILE *f = fopen("debut", "w");
@@ -28,7 +30,7 @@ int position(char** files){
 	if(archive != NULL){
 		archive = fopen(files[2], "r");
 		while(fread(&c,1,1,archive)>0 && !trouve){
-			if(c == files[3][pos])
+			if(c == files[3][pos-taille])
 				pos++;
 			else{
 				fseek(archive,-pos,SEEK_CUR);

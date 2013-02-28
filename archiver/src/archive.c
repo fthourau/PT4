@@ -145,7 +145,8 @@ void build_or_add_archive_from_files(int number_of_arguments, char** files) {
 				}
 			}
 			else
-				position(files);
+				files_begin(files);
+			files_end(files);
 
 			i++;
 		} while(i < number_of_arguments);
@@ -166,7 +167,8 @@ void build_or_add_archive_from_files(int number_of_arguments, char** files) {
 
 void delete_files_from_archive(int argc,char** files){
 	
-	position(files);
+	files_begin(files);
+	files_end(files);
 
 }
 
