@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
+#include <time.h>
 
 unsigned long long int oct2dec(char* c) {
 	int i;
@@ -75,6 +76,84 @@ bool is_tar_format(char* archive_to_check) {
 			 (archive_to_check[len - 3] == 't') &&
 			 (archive_to_check[len - 2] == 'a') &&
 			 (archive_to_check[len - 1] == 'r') );
+}
+
+char* get_rights(char single_right_number) {
+	switch(single_right_number) {
+		case '7':
+			return "rwx";
+		case '6':
+			return "rw-";
+		case '5':
+			return "r-x";
+		case '4':
+			return "r--";
+		case '3':
+			return "-wx";
+		case '2':
+			return "-w-";
+		case '1':
+			return "--x";
+		case '0':
+			return "---";
+	}
+	return "???";
+}
+
+void printf_weight(unsigned long long int weight) {
+	int unit = 0;
+	int rest;
+	char size[13];
+	char n[2] = {'\0'};
+
+	while(weight >= 1024) {
+		rest = weight % 1024;
+		weight /= 1024;
+		unit++;
+	}
+
+	sprintf(size, "%lld", weight);
+	strcat(size, ",");
+	sprintf(n, "%d", rest / 100);
+	strcat(size, n);
+
+	if(unit == 1)
+		strcat(size, "K");
+	else if(unit == 2)
+		strcat(size, "M");
+	else if(unit == 3)
+		strcat(size, "G");
+
+	printf("%s", size);
+}
+
+void printf_date(unsigned long long int date) {
+	struct tm* mtime;
+	char date_str[32];
+
+	static const char *jours[] = {
+	    "Dimanche",
+	    "Lundi",
+	    "Mardi",
+	    "Mercredi",
+	    "Jeudi",
+	    "Vendredi",
+	    "Samedi"
+    };
+
+	mtime = localtime((time_t*)date);
+
+	sprintf(date_str,
+        "%s-%02d-%02d-%02d-%02d-%02d-%d",
+        jours[mtime->tm_wday],
+        mtime->tm_mday,
+        mtime->tm_hour,
+        mtime->tm_min,
+        mtime->tm_sec,
+        mtime->tm_mon + 1,
+        mtime->tm_year + 1900);
+
+	printf("%s", date_str);
 }
 
 void compress_with_gzip(char* filename) {

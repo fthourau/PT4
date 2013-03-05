@@ -15,44 +15,16 @@
 #include "../head/ustarheader.h"
 #include "../head/utilitarian.h"
 
-// Research if a file named "prefix/filename" is present inside the archive
-// If it's present, return the position of the cursor just before the header
-// otherwise returns -1
-int file_is_present(char* filename, char* prefix, FILE* archive) {
-	bool end_of_archive = false;
-	FILE_HEADER header;
-	size_t filesize;
-
-	do {
-		build_ustar_header_from_archive(&header, archive);
-
-		if(header.name != NULL && (int)header.name[0] > 32) {
-			if(header.name == filename && header.prefix == prefix)
-				end_of_archive = true;
-			else {
-				filesize = oct2dec(header.size);
-				nbr_of_block = calculate_number_of_block(filesize);
-				cursor_offset = (BLOCK_SIZE * nbr_of_block);
-				fseek(archive, cursor_offset, SEEK_CUR);
-			}
-		}
-		else
-			end_of_archive = true;
-	} while(!end_of_archive);
-}
-
-void get_file_info_verbose(FILE_HEADER fh) {
-	/*printf( (S_ISDIR(fileStat.st_mode)) ? "d" : "-");
-    printf( (fileStat.st_mode & S_IRUSR) ? "r" : "-");
-    printf( (fileStat.st_mode & S_IWUSR) ? "w" : "-");
-    printf( (fileStat.st_mode & S_IXUSR) ? "x" : "-");
-    printf( (fileStat.st_mode & S_IRGRP) ? "r" : "-");
-    printf( (fileStat.st_mode & S_IWGRP) ? "w" : "-");
-    printf( (fileStat.st_mode & S_IXGRP) ? "x" : "-");
-    printf( (fileStat.st_mode & S_IROTH) ? "r" : "-");
-    printf( (fileStat.st_mode & S_IWOTH) ? "w" : "-");
-    printf( (fileStat.st_mode & S_IXOTH) ? "x" : "-");*/
-
+void get_file_info_verbose(FILE_HEADER header) {
+	printf( (header.typeflag[0] == '5') ? "d" : "-");
+	// Get rights of file
+    printf("%s", get_rights(header.mode[4]));
+    printf("%s", get_rights(header.mode[5]));
+    printf("%s", get_rights(header.mode[6]));
+    printf(" %s %s ", header.uname, header.gname);
+    printf_weight(oct2dec(header.size));
+    printf_date(oct2dec(header.mtime));
+    printf("\t%s\n", header.name);
     // touch -d -> edit mtime
 	// touch -d "`date -d @1360884899 '+%Y-%m-%d %H:%M:%S'`" <filename>
 }
@@ -66,6 +38,40 @@ unsigned int calculate_number_of_block(size_t filesize) {
 		nbr_of_block++;
 
 	return nbr_of_block;
+}
+
+// Research if a file named "prefix/filename" is present inside the archive
+// If it's present, return the position of the cursor just before the header
+// otherwise returns -1
+int file_is_present(char* filename, char* prefix, FILE* archive) {
+	bool end_of_archive = false;
+	FILE_HEADER header;
+	size_t filesize;
+	unsigned int cursor_pos = -1;
+	unsigned int cursor_offset, nbr_of_block;
+
+	do {
+		build_ustar_header_from_archive(&header, archive);
+
+		if(header.name != NULL && (int)header.name[0] > 32) {
+			if(header.name == filename && header.prefix == prefix) {
+				cursor_pos = ftell(archive) - HEADER_S;
+				end_of_archive = true;
+			}
+			else {
+				filesize = oct2dec(header.size);
+				nbr_of_block = calculate_number_of_block(filesize);
+				cursor_offset = (BLOCK_SIZE *  nbr_of_block);
+				fseek(archive, cursor_offset, SEEK_CUR);
+			}
+		}
+		else
+			end_of_archive = true;
+	} while(!end_of_archive);
+
+	rewind(archive);
+
+	return cursor_pos;
 }
 
 // This function is made for building an archive (or adding to an existing one
