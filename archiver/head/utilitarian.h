@@ -13,6 +13,9 @@ char* get_rights(char single_right_number);
 void printf_weight(unsigned long long int weight);
 void printf_date(unsigned long long int date);
 
+int files_begin(char** files);
+int files_end(char** files);
+
 // Compression
 void compress_with_gzip(char* filename);
 

@@ -171,6 +171,13 @@ void build_or_add_archive_from_files(int number_of_arguments, char** files) {
 															strerror(errno));
 }
 
+void delete_files_from_archive(int argc,char** files){
+	
+	files_begin(files);
+	files_end(files);
+
+}
+
 void list_files_from_archive(char* archive_path) {
 	errno = 0;
 	FILE* archive = fopen(archive_path, "r");

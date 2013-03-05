@@ -20,6 +20,35 @@ unsigned long long int oct2dec(char* c) {
 	return result;
 }
 
+int files_end(char** files){
+}
+int files_begin(char** files){
+	FILE* archive = fopen(files[2], "r");
+	int taille = strlen(files[3]), trouve = 0, pos = 0, position = 0;
+	FILE *f = fopen("debut", "w");
+	char c;
+	
+	if(archive != NULL){
+		archive = fopen(files[2], "r");
+		while(fread(&c,1,1,archive)>0 && !trouve){
+			if(c == files[3][pos-taille])
+				pos++;
+			else{
+				fseek(archive,-pos,SEEK_CUR);
+				pos=0;
+			}
+
+			trouve = (pos==taille);
+			//subtraction of the size else this display the last 
+			//character of the word and not the position of the word
+			position = ftell(archive)-taille; 
+			fprintf(f,"%c",c);
+		}
+		fclose(archive);
+	}
+		return position; //return the position of the word in the file
+}
+
 unsigned long long int dec2oct(char* c) {
 	unsigned long int div_result = atoi(c);
 	int i = 0;
