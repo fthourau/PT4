@@ -1,10 +1,13 @@
-#include "../head/filehandling.h"
-
-#include <string.h>
 #include <unistd.h>
 #include <errno.h>
 #include <sys/stat.h>
-#include <sys/types.h>
+#include <stdio.h>
+#include <string.h>
+
+#include "../head/ustarheader.h"
+#include "../head/filehandling.h"
+#include "../head/utilitarian.h"
+#include "../head/errors.h"
 
 // Prototypes of private functions
 void clean_up_header(FILE_HEADER* header);
@@ -53,7 +56,7 @@ void build_ustar_header_from_file(FILE_HEADER* header, char* filename) {
 		calculate_checksum(header);
 	}
 	else
-		fprintf(stderr, "Echec de stat sur le fichier '%s': %s\n", filename,
+		fprintf(stderr, "%s '%s': %s\n", STAT_FAILURE_ERR, filename,
 															strerror(errno));
 }
 
@@ -77,6 +80,88 @@ void write_header_to_archive(FILE_HEADER* header, FILE* archive) {
 	fwrite(header->stuffing, STUFFING_S, 1, archive);
 }
 
+void calculate_checksum(FILE_HEADER* header) {
+	int sum = 0;
+	char buffer[8];
+
+	int unit[15] = {
+		NAME_S, MODE_S, UID_S, GID_S, SIZE_S, MTIME_S, TYPEFLAG_S, LINKNAME_S,
+		MAGIC_S, VERSION_S, UNAME_S, GNAME_S, DEVMAJOR_S, DEVMINOR_S, PREFIX_S
+	};
+
+	int i;
+	int j = -1;
+
+loop:
+	i = 0;
+	j++;
+
+	while(i < unit[j]) {
+		switch(j) {
+			case 0:
+				sum += (int)header->name[i++];
+			break;
+			case 1:
+				sum += (int)header->mode[i++];
+			break;
+			case 2:
+				sum += (int)header->uid[i++];
+			break;
+			case 3:
+				sum += (int)header->gid[i++];
+			break;
+			case 4:
+				sum += (int)header->size[i++];
+			break;
+			case 5:
+				sum += (int)header->mtime[i++];
+			break;
+			case 6:
+				sum += (int)header->typeflag[i++];
+			break;
+			case 7:
+				sum += (int)header->linkname[i++];
+			break;
+			case 8:
+				sum += (int)header->magic[i++];
+			break;
+			case 9:
+				sum += (int)header->version[i++];
+			break;
+			case 10:
+				sum += (int)header->uname[i++];
+			break;
+			case 11:
+				sum += (int)header->gname[i++];
+			break;
+			case 12:
+				sum += (int)header->devmajor[i++];
+			break;
+			case 13:
+				sum += (int)header->devminor[i++];
+			break;
+			case 14:
+				sum += (int)header->prefix[i++];
+			break;
+		}
+	}
+		
+	if(j != 14)
+		goto loop;
+
+	sprintf(buffer, "%d", sum);
+	sprintf(buffer, "%lld", dec2oct(buffer));
+
+	header->cksum[0] = '0';
+	header->cksum[1] = buffer[0];
+	header->cksum[2] = buffer[1];
+	header->cksum[3] = buffer[2];
+	header->cksum[4] = buffer[3];
+	header->cksum[5] = buffer[4];
+	header->cksum[6] = '\0';
+	header->cksum[7] = ' ';
+}
+
 void printf_header(FILE_HEADER* header) {
 	printf("%s", header->name);
 	printf("%s", header->mode);
@@ -95,6 +180,25 @@ void printf_header(FILE_HEADER* header) {
 	printf("%s", header->devminor);
 	printf("%s", header->prefix);
 	printf("%s", header->stuffing);
+}
+
+void printf_header_info(FILE_HEADER* header) {
+	if(header->typeflag[0] == '5')
+		printf("d");
+	else if(header->typeflag[0] == '1')
+		printf("l");
+	else
+		printf("-");
+
+    printf("%s", get_rights(header->mode[4]));
+    printf("%s", get_rights(header->mode[5]));
+    printf("%s", get_rights(header->mode[6]));
+    printf(" %s %s ", header->uname, header->gname);
+    printf("%s ", get_weight(oct2dec(header->size)));
+    // The following expression permits to cut the final '\n' character
+    printf("%.*s%s", 24, get_asc_date(oct2dec(header->mtime)), 
+    					&get_asc_date(oct2dec(header->mtime))[25]);
+    printf(" %s\n", header->name);
 }
 
 // Private functions

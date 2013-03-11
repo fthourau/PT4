@@ -41,6 +41,7 @@ ACTION DES OPTIONS
 
 		-m, --diff
 			Affiche les différences entre un fichier de l'archive et de même nom.
+			Sans affichage, alors pas de différence.
 
 		-s, --sparse
 			Economise l'espace lorsque les fichiers comportent de longues successions de zéros.

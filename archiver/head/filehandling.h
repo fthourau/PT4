@@ -1,7 +1,6 @@
-#ifndef _FILEHANDLING_H_
-#define _FILEHANDLING_H_
+#ifndef FILEHANDLING_H
+#define FILEHANDLING_H
 
-#include "../head/ustarheader.h"
 #include <sys/types.h>
 
 void get_prefix_and_name(char* full_path, char* filename, char* path);
@@ -13,7 +12,6 @@ void get_file_type(char* type, mode_t mode);
 void get_username(char* username, uid_t user_id);
 void get_groupname(char* groupname, gid_t group_id);
 void get_device_numbers(char* devmajor, char* devminor, dev_t devnumber);
-void calculate_checksum(FILE_HEADER* fh);
 
 // The function fulfills the string empty space with NULL-terminated character
 void fulfill_empty_space(char* string, int starting_point, int length);

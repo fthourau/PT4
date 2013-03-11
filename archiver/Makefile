@@ -1,4 +1,4 @@
-.PHONY: clean, proper, test, rebuild, archive
+.PHONY: clean, proper, rebuild, test
 
 # Directories
 OBJ_DIR = obj
@@ -6,10 +6,11 @@ SRC_DIR = src
 INC_DIR = head
 
 # All objects created
-OBJECTS = $(OBJ_DIR)/main.o $(OBJ_DIR)/utilitarian.o $(OBJ_DIR)/ustarheader.o \
-		 	$(OBJ_DIR)/archive.o $(OBJ_DIR)/extraction.o $(OBJ_DIR)/options.o \
+OBJECTS = $(OBJ_DIR)/main.o $(OBJ_DIR)/ustarheader.o $(OBJ_DIR)/archive.o \
+			$(OBJ_DIR)/extraction.o $(OBJ_DIR)/delete.o $(OBJ_DIR)/list.o \
+			$(OBJ_DIR)/diff.o $(OBJ_DIR)/options.o $(OBJ_DIR)/utilitarian.o \
 		 	$(OBJ_DIR)/optionhandling.o $(OBJ_DIR)/filehandling.o \
-		 	$(OBJ_DIR)/errors.o
+		 	$(OBJ_DIR)/archivehandling.o $(OBJ_DIR)/errors.o
 
 # Compiler and compilation's options
 CC = gcc
@@ -28,28 +29,7 @@ all: $(OBJECTS)
 $(OBJ_DIR)/main.o: $(SRC_DIR)/main.c
 		$(CC) $(CNORM) -c $< -o $@ $(CFLAGS)
 
-$(OBJ_DIR)/utilitarian.o: $(SRC_DIR)/utilitarian.c $(INC_DIR)/utilitarian.h
-		$(CC) $(CNORM) -c $< -o $@ $(CFLAGS)
-
-$(OBJ_DIR)/ustarheader.o: $(SRC_DIR)/ustarheader.c $(INC_DIR)/ustarheader.h
-		$(CC) $(CNORM) -c $< -o $@ $(CFLAGS)
-
-$(OBJ_DIR)/options.o: $(SRC_DIR)/options.c $(INC_DIR)/options.h
-		$(CC) $(CNORM) -c $< -o $@ $(CFLAGS)
-
-$(OBJ_DIR)/archive.o: $(SRC_DIR)/archive.c $(INC_DIR)/archive.h
-		$(CC) $(CNORM) -c $< -o $@ $(CFLAGS)
-
-$(OBJ_DIR)/extraction.o: $(SRC_DIR)/extraction.c $(INC_DIR)/extraction.h
-		$(CC) $(CNORM) -c $< -o $@ $(CFLAGS)
-
-$(OBJ_DIR)/optionhandling.o: $(SRC_DIR)/optionhandling.c $(INC_DIR)/optionhandling.h
-		$(CC) $(CNORM) -c $< -o $@ $(CFLAGS)
-
-$(OBJ_DIR)/filehandling.o: $(SRC_DIR)/filehandling.c $(INC_DIR)/filehandling.h
-		$(CC) $(CNORM) -c $< -o $@ $(CFLAGS)
-
-$(OBJ_DIR)/errors.o: $(SRC_DIR)/errors.c $(INC_DIR)/errors.h
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC_DIR)/%.h 
 		$(CC) $(CNORM) -c $< -o $@ $(CFLAGS)
 
 clean:
@@ -58,14 +38,7 @@ clean:
 proper: clean
 		rm -rf $(EXEC)
 
-test:
-		./$(EXEC) a.tar
-
 rebuild: proper all
 
-archive:
-		@echo un > one.txt
-		@echo deux > two.txt 
-		@echo trois > three.txt
-		@tar cvf a.tar one.txt two.txt three.txt 1> /dev/null
-		@rm -f one.txt two.txt three.txt
+test:
+		./$(EXEC) a.tar

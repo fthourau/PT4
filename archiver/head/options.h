@@ -1,5 +1,5 @@
-#ifndef _OPTIONS_H_
-#define _OPTIONS_H_
+#ifndef OPTIONS_H
+#define OPTIONS_H
 
 #include <stdbool.h>
 
@@ -11,6 +11,7 @@ typedef enum ACTION_T {
 	UPDATE,
 	EXTRACT,
 	DELETE,
+	DIFF,
 	HELP,
 	NO_ACTION
 } action_t;
@@ -21,11 +22,13 @@ extern action_t CURRENT_ACTION;
 // Position of the first argument
 extern int first_argument_position;
 
+// Check if it's a right combination of options
+extern int option_checking;
+
 // Options' flags
 extern bool VERBOSE_FLAG;
 extern bool MAKE_ARCHIVE_FLAG;
 extern bool COMPRESS_FLAG;
 extern bool SPARSE_FLAG;
-extern bool DIFF_FLAG;
 
 #endif

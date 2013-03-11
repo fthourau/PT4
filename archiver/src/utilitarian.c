@@ -20,35 +20,6 @@ unsigned long long int oct2dec(char* c) {
 	return result;
 }
 
-int files_end(char** files){
-}
-int files_begin(char** files){
-	FILE* archive = fopen(files[2], "r");
-	int taille = strlen(files[3]), trouve = 0, pos = 0, position = 0;
-	FILE *f = fopen("debut", "w");
-	char c;
-	
-	if(archive != NULL){
-		archive = fopen(files[2], "r");
-		while(fread(&c,1,1,archive)>0 && !trouve){
-			if(c == files[3][pos-taille])
-				pos++;
-			else{
-				fseek(archive,-pos,SEEK_CUR);
-				pos=0;
-			}
-
-			trouve = (pos==taille);
-			//subtraction of the size else this display the last 
-			//character of the word and not the position of the word
-			position = ftell(archive)-taille; 
-			fprintf(f,"%c",c);
-		}
-		fclose(archive);
-	}
-		return position; //return the position of the word in the file
-}
-
 unsigned long long int dec2oct(char* c) {
 	unsigned long int div_result = atoi(c);
 	int i = 0;
@@ -84,13 +55,6 @@ unsigned long long int dec2oct(char* c) {
 	return result;
 }
 
-char* argument(int nb) {
-	if(nb == 0)
-		return "ne prend aucun argument";
-	else
-		return "prend un argument";
-}
-
 int get_file_weight(FILE* file) {
 	fseek(file, 0, SEEK_END);
 	int t = ftell(file);
@@ -105,6 +69,13 @@ bool is_tar_format(char* archive_to_check) {
 			 (archive_to_check[len - 3] == 't') &&
 			 (archive_to_check[len - 2] == 'a') &&
 			 (archive_to_check[len - 1] == 'r') );
+}
+
+bool is_gzip_format(char* archive_to_check) {
+	int len = strlen(archive_to_check);
+	return ( (archive_to_check[len - 3] == '.') &&
+			 (archive_to_check[len - 2] == 'g') &&
+			 (archive_to_check[len - 1] == 'z') );
 }
 
 char* get_rights(char single_right_number) {
@@ -129,10 +100,10 @@ char* get_rights(char single_right_number) {
 	return "???";
 }
 
-void printf_weight(unsigned long long int weight) {
+char* get_weight(unsigned long long int weight) {
 	int unit = 0;
 	int rest;
-	char size[13];
+	static char size[13];
 	char n[2] = {'\0'};
 
 	while(weight >= 1024) {
@@ -153,36 +124,13 @@ void printf_weight(unsigned long long int weight) {
 	else if(unit == 3)
 		strcat(size, "G");
 
-	printf("%s", size);
+	return size;
 }
 
-void printf_date(unsigned long long int date) {
-	struct tm* mtime;
-	char date_str[32];
+char* get_asc_date(long int epoch_time) {
+	struct tm* date = localtime(&epoch_time);
 
-	static const char *jours[] = {
-	    "Dimanche",
-	    "Lundi",
-	    "Mardi",
-	    "Mercredi",
-	    "Jeudi",
-	    "Vendredi",
-	    "Samedi"
-    };
-
-	mtime = localtime((time_t*)date);
-
-	sprintf(date_str,
-        "%s-%02d-%02d-%02d-%02d-%02d-%d",
-        jours[mtime->tm_wday],
-        mtime->tm_mday,
-        mtime->tm_hour,
-        mtime->tm_min,
-        mtime->tm_sec,
-        mtime->tm_mon + 1,
-        mtime->tm_year + 1900);
-
-	printf("%s", date_str);
+	return asctime(date);
 }
 
 void compress_with_gzip(char* filename) {
@@ -191,5 +139,11 @@ void compress_with_gzip(char* filename) {
 	strcat(commandline, " > ");
 	strcat(commandline, filename);
 	strcat(commandline, ".gz");
+	system(commandline);
+}
+
+void decompress_with_gzip(char* filename) {
+	char commandline[256] = { "gunzip " };
+	strcat(commandline, filename);
 	system(commandline);
 }

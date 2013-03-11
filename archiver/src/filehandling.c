@@ -1,5 +1,6 @@
 #include "../head/filehandling.h"
 #include "../head/utilitarian.h"
+#include "../head/ustarheader.h"
 
 #include <pwd.h>
 #include <grp.h>
@@ -278,150 +279,74 @@ void get_device_numbers(char* devmajor, char* devminor, dev_t devnumber) {
 	sprintf(devminor, "%lld", dec2oct(buff));
 }
 
-void calculate_checksum(FILE_HEADER* header) {
-	int i = 0;
-	int j = 0;
+/*void calculate_checksum(FILE_HEADER* header) {
 	int sum = 0;
-	int offset = 0;
 	char buffer[8];
 
-	while(j < HEADER_S) {
-		if(j < NAME_S) {
-			offset = NAME_S;
-			while(j < offset) {
-				sum += (int) header->name[i++];
-				j++;
-			}
-		}
-		else if(j < offset + MODE_S) {
-			offset += MODE_S;
-			i = 0;
-			while(j < offset) {
-				sum += (int) header->mode[i++];
-				j++;
-			}
-		}
-		else if(j < offset + UID_S) {
-			offset += UID_S;
-			i = 0;
-			while(j < offset) {
-				sum += (int) header->uid[i++];
-				j++;
-			}
-		}
-		else if(j < offset + GID_S) {
-			offset += GID_S;
-			i = 0;
-			while(j < offset) {
-				sum += (int) header->gid[i++];
-				j++;
-			}
-		}
-		else if(j < offset + SIZE_S) {
-			offset += SIZE_S;
-			i = 0;
-			while(j < offset) {
-				sum += (int) header->size[i++];
-				j++;
-			}
-		}
-		else if(j < offset + MTIME_S) {
-			offset += MTIME_S;
-			i = 0;
-			while(j < offset) {
-				sum += (int) header->mtime[i++];
-				j++;
-			}
-		}
-		else if(j < offset + CKSUM_S) {
-			offset += CKSUM_S;
-			i = 0;
-			while(j < offset) {
-				sum += (int) header->cksum[i++];
-				j++;
-			}
-		}
-		else if(j < offset + TYPEFLAG_S) {
-			offset += TYPEFLAG_S;
-			i = 0;
-			while(j < offset) {
-				sum += (int) header->typeflag[i++];
-				j++;
-			}
-		}
-		else if(j < offset + LINKNAME_S) {
-			offset += LINKNAME_S;
-			i = 0;
-			while(j < offset) {
-				sum += (int) header->linkname[i++];
-				j++;
-			}
-		}
-		else if(j < offset + MAGIC_S) {
-			offset += MAGIC_S;
-			i = 0;
-			while(j < offset) {
-				sum += (int) header->magic[i++];
-				j++;
-			}
-		}
-		else if(j < offset + VERSION_S) {
-			offset += VERSION_S;
-			i = 0;
-			while(j < offset) {
-				sum += (int) header->version[i++];
-				j++;
-			}
-		}
-		else if(j < offset + UNAME_S) {
-			offset += UNAME_S;
-			i = 0;
-			while(j < offset) {
-				sum += (int) header->uname[i++];
-				j++;
-			}
-		}
-		else if(j < offset + GNAME_S) {
-			offset += GNAME_S;
-			i = 0;
-			while(j < offset) {
-				sum += (int) header->gname[i++];
-				j++;
-			}
-		}
-		else if(j < offset + DEVMAJOR_S) {
-			offset += DEVMAJOR_S;
-			i = 0;
-			while(j < offset) {
-				sum += (int) header->devmajor[i++];
-				j++;
-			}
-		}
-		else if(j < offset + DEVMINOR_S) {
-			offset += DEVMINOR_S;
-			i = 0;
-			while(j < offset) {
-				sum += (int) header->devminor[i++];
-				j++;
-			}
-		}
-		else if(j < offset + PREFIX_S) {
-			offset += PREFIX_S;
-			i = 0;
-			while(j < offset) {
-				sum += (int) header->prefix[i++];
-				j++;
-			}
-		}
-		else if(j < offset + STUFFING_S) {
-			offset += STUFFING_S;
-			i = 0;
-			while(j < offset) {
-				sum += (int) header->stuffing[i++];
-				j++;
-			}
+	int unit[15] = {
+		NAME_S, MODE_S, UID_S, GID_S, SIZE_S, MTIME_S, TYPEFLAG_S, LINKNAME_S,
+		MAGIC_S, VERSION_S, UNAME_S, GNAME_S, DEVMAJOR_S, DEVMINOR_S, PREFIX_S
+	};
+
+	int i;
+	int j = -1;
+
+loop:
+	i = 0;
+	j++;
+
+	while(i < unit[j]) {
+		switch(j) {
+			case 0:
+				sum += (int)header->name[i++];
+			break;
+			case 1:
+				sum += (int)header->mode[i++];
+			break;
+			case 2:
+				sum += (int)header->uid[i++];
+			break;
+			case 3:
+				sum += (int)header->gid[i++];
+			break;
+			case 4:
+				sum += (int)header->size[i++];
+			break;
+			case 5:
+				sum += (int)header->mtime[i++];
+			break;
+			case 6:
+				sum += (int)header->typeflag[i++];
+			break;
+			case 7:
+				sum += (int)header->linkname[i++];
+			break;
+			case 8:
+				sum += (int)header->magic[i++];
+			break;
+			case 9:
+				sum += (int)header->version[i++];
+			break;
+			case 10:
+				sum += (int)header->uname[i++];
+			break;
+			case 11:
+				sum += (int)header->gname[i++];
+			break;
+			case 12:
+				sum += (int)header->devmajor[i++];
+			break;
+			case 13:
+				sum += (int)header->devminor[i++];
+			break;
+			case 14:
+				sum += (int)header->prefix[i++];
+			break;
 		}
 	}
+		
+	if(j != 14)
+		goto loop;
 
 	sprintf(buffer, "%d", sum);
 	sprintf(buffer, "%lld", dec2oct(buffer));
@@ -434,7 +359,7 @@ void calculate_checksum(FILE_HEADER* header) {
 	header->cksum[5] = buffer[4];
 	header->cksum[6] = '\0';
 	header->cksum[7] = ' ';
-}
+}*/
 
 void fulfill_empty_space(char* string, int starting_point, int length) {
 	int i;

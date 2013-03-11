@@ -1,5 +1,5 @@
-#ifndef _USTARHEADER_H_
-#define _USTARHEADER_H_
+#ifndef USTARHEADER_H
+#define USTARHEADER_H
 
 #include <stdio.h>
 
@@ -45,9 +45,12 @@ typedef struct FILE_HEADER {
 } FILE_HEADER;
 
 // SOME UTILITARIAN FUNCTIONS
-void build_ustar_header_from_archive(FILE_HEADER* fh, FILE* archive);
-void build_ustar_header_from_file(FILE_HEADER* fh, char* filename);
-void write_header_to_archive(FILE_HEADER* fh, FILE* archive);
-void printf_header(FILE_HEADER* fh);
+void build_ustar_header_from_archive(FILE_HEADER* header, FILE* archive);
+void build_ustar_header_from_file(FILE_HEADER* header, char* filename);
+void write_header_to_archive(FILE_HEADER* header, FILE* archive);
+void calculate_checksum(FILE_HEADER* header);
+
+void printf_header(FILE_HEADER* header);
+void printf_header_info(FILE_HEADER* header);
 
 #endif

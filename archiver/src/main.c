@@ -1,10 +1,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "../head/options.h"
 #include "../head/archive.h"
+#include "../head/delete.h"
+#include "../head/list.h"
 #include "../head/extraction.h"
+#include "../head/diff.h"
 #include "../head/optionhandling.h"
+#include "../head/options.h"
 #include "../head/errors.h"
 #include "../head/utilitarian.h"
 
@@ -45,7 +48,11 @@ int main(int argc, char** argv) {
 			break;
 			case DELETE:
 			if(argv[2] != NULL)
-				delete_files_from_archive(argc,argv);
+				delete_files_from_archive(argc, argv);
+			break;
+			case DIFF:
+				if(argv[2] != NULL)
+					diff_command(argc, argv);
 			break;
 			case HELP:
 				system("cat help.man | more");

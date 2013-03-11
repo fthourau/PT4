@@ -45,24 +45,35 @@ void get_options(int argc, char **argv) {
 		switch(c) {
 			case 'c':
 				CURRENT_ACTION = CREATE;
+				option_checking++;
 			break;
 			case 't':
 				CURRENT_ACTION = LIST;
+				option_checking++;
 			break;
 			case 'r':
 				CURRENT_ACTION = ADD;
+				option_checking++;
 			break;
 			case 'u':
 				CURRENT_ACTION = UPDATE;
+				option_checking++;
 			break;
 			case 'x' :
 				CURRENT_ACTION = EXTRACT;
+				option_checking++;
 			break;
 			case 'd':
 				CURRENT_ACTION = DELETE;
+				option_checking++;
+			break;
+			case 'm':
+				CURRENT_ACTION = DIFF;
+				option_checking++;
 			break;
 			case 'h':
 				CURRENT_ACTION = HELP;
+				option_checking++;
 			break;
 			case 'v':
 				VERBOSE_FLAG = true;
@@ -76,13 +87,15 @@ void get_options(int argc, char **argv) {
 			case 's':
 				SPARSE_FLAG = true;
 			break;
-			case 'm':
-				DIFF_FLAG = true;
-			break;
 			default:
 				fprintf(stderr, "%s\n", UNKNOWN_OPTION_ERR);
 				exit(EXIT_FAILURE);
 			break;
+		}
+
+		if(option_checking > 1) {
+			fprintf(stderr, "%s\n", INVALID_OPTION_COMBINATION_ERR);
+			exit(EXIT_FAILURE);
 		}
 	}
 }
