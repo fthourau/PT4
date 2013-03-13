@@ -1,7 +1,5 @@
-#include <unistd.h>
 #include <errno.h>
 #include <sys/stat.h>
-#include <stdio.h>
 #include <string.h>
 
 #include "../head/ustarheader.h"

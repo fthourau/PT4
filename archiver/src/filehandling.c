@@ -1,12 +1,12 @@
-#include "../head/filehandling.h"
-#include "../head/utilitarian.h"
-#include "../head/ustarheader.h"
-
 #include <pwd.h>
 #include <grp.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <linux/kdev_t.h>
+
+#include "../head/filehandling.h"
+#include "../head/utilitarian.h"
+#include "../head/ustarheader.h"
 
 // Prototypes of private functions
 char get_user_mode(mode_t mode);

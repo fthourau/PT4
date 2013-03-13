@@ -1,10 +1,5 @@
-#include <stdlib.h>
 #include <string.h>
-#include <time.h>
 #include <errno.h>
-#include <sys/stat.h>
-#include <sys/unistd.h>
-#include <fcntl.h>
 
 #include "../head/options.h"
 #include "../head/archive.h"
@@ -106,6 +101,6 @@ void build_or_add_archive_from_files(int number_of_arguments, char** files) {
 			compress_with_gzip(files[first_argument_position]);
 	}
 	else
-		fprintf(stderr, "%s '%s': %s\n", INVALID_FILE_ERR, files[2], 
-															strerror(errno));
+		fprintf(stderr, "%s '%s': %s\n", INVALID_FILE_ERR,
+							files[first_argument_position], strerror(errno));
 }

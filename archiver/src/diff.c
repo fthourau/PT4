@@ -1,8 +1,6 @@
 #include <errno.h>
-#include <malloc.h>
 #include <string.h>
 #include <stdlib.h>
-#include <unistd.h>
 
 #include "../head/options.h"
 #include "../head/errors.h"
