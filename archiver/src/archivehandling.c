@@ -50,3 +50,30 @@ int file_is_present(char* filename, char* prefix, FILE* archive) {
 
 	return cursor_pos;
 }
+
+unsigned int number_of_file_in_archive(FILE* archive) {
+	bool end_of_archive = false;
+	FILE_HEADER header;
+	size_t filesize;
+	unsigned int number_of_file = 0;
+	unsigned int cursor_offset, nbr_of_block;
+
+	do {
+		build_ustar_header_from_archive(&header, archive);
+
+		if(header.name != NULL && (int)header.name[0] > 32) {
+			number_of_file++;
+
+			filesize = oct2dec(header.size);
+			nbr_of_block = calculate_number_of_block(filesize);
+			cursor_offset = (BLOCK_SIZE *  nbr_of_block);
+			fseek(archive, cursor_offset, SEEK_CUR);
+		}
+		else
+			end_of_archive = true;
+	} while(!end_of_archive);
+
+	rewind(archive);
+
+	return number_of_file;
+}

@@ -192,11 +192,11 @@ void printf_header_info(FILE_HEADER* header) {
     printf("%s", get_rights(header->mode[5]));
     printf("%s", get_rights(header->mode[6]));
     printf(" %s %s ", header->uname, header->gname);
-    printf("%s ", get_weight(oct2dec(header->size)));
+    printf("%*s ", 7, get_weight(oct2dec(header->size)));
     // The following expression permits to cut the final '\n' character
     printf("%.*s%s", 24, get_asc_date(oct2dec(header->mtime)), 
     					&get_asc_date(oct2dec(header->mtime))[25]);
-    printf(" %s\n", header->name);
+    printf(" %s%s\n", header->prefix, header->name);
 }
 
 // Private functions

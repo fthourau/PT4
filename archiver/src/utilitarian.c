@@ -101,21 +101,26 @@ char* get_rights(char single_right_number) {
 }
 
 char* get_weight(unsigned long long int weight) {
+	unsigned long long int w = weight;
 	int unit = 0;
 	int rest;
 	static char size[13];
-	char n[2] = {'\0'};
+	memset(size, 0, 13);
 
-	while(weight >= 1024) {
-		rest = weight % 1024;
-		weight /= 1024;
+	while(w >= 1024) {
+		rest = w % 1024;
+		w /= 1024;
 		unit++;
 	}
 
-	sprintf(size, "%lld", weight);
-	strcat(size, ",");
-	sprintf(n, "%d", rest / 100);
-	strcat(size, n);
+	sprintf(size, "%lld", w);
+
+	if(unit != 0) {
+		char n[2] = {'\0'};
+		strcat(size, ",");
+		sprintf(n, "%d", rest / 100);
+		strcat(size, n);
+	}
 
 	if(unit == 1)
 		strcat(size, "K");
@@ -123,6 +128,17 @@ char* get_weight(unsigned long long int weight) {
 		strcat(size, "M");
 	else if(unit == 3)
 		strcat(size, "G");
+	else
+		strcat(size, "o");
+
+	// if(weight < 1000)
+		// strcat(size, " ");
+	
+	// if(weight < 100)
+		// strcat(size, " ");
+
+	// if(weight < 10)
+		// strcat(size, " ");
 
 	return size;
 }

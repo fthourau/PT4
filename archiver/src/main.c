@@ -22,6 +22,8 @@ int main(int argc, char** argv) {
 	if(argc > 1) {
 		get_options(argc, argv);
 
+		//  If the archive is compressed we have to uncompress it before any
+		//  action
 		if( argv[first_argument_position] != NULL &&
 			is_gzip_format(argv[first_argument_position]) ) {
 			uncompress_and_change_path(argv);
@@ -52,6 +54,12 @@ int main(int argc, char** argv) {
 					fprintf(stderr, "%s\n", ALL_ARG_MISSING_ERR);
 			break;
 			case UPDATE:
+				if(argc > 3)
+					update_files_from_archive(argc, argv);
+				else if(argc == 3)
+					fprintf(stderr, "%s\n", FILE_ARG_MISSING_ERR);
+				else
+					fprintf(stderr, "%s\n", ALL_ARG_MISSING_ERR);
 			break;
 			case EXTRACT:
 				if(argv[first_argument_position] != NULL)
@@ -83,7 +91,10 @@ int main(int argc, char** argv) {
 			break;
 		}
 
+		// If the archive is compressed, we have to delete the simple tar
 		if(COMPRESS_FLAG) {
+			// If the archive was compressed before any action, we have to
+			// compress it again
 			if(MARKED_FOR_DELETION)
 				compress_with_gzip(argv[first_argument_position]);
 			

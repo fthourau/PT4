@@ -7,10 +7,11 @@ INC_DIR = head
 
 # All objects created
 OBJECTS = $(OBJ_DIR)/main.o $(OBJ_DIR)/ustarheader.o $(OBJ_DIR)/archive.o \
-			$(OBJ_DIR)/extraction.o $(OBJ_DIR)/delete.o $(OBJ_DIR)/list.o \
-			$(OBJ_DIR)/diff.o $(OBJ_DIR)/options.o $(OBJ_DIR)/utilitarian.o \
-		 	$(OBJ_DIR)/optionhandling.o $(OBJ_DIR)/filehandling.o \
-		 	$(OBJ_DIR)/archivehandling.o $(OBJ_DIR)/errors.o
+			$(OBJ_DIR)/extraction.o $(OBJ_DIR)/delete.o $(OBJ_DIR)/update.o \
+			$(OBJ_DIR)/list.o $(OBJ_DIR)/diff.o $(OBJ_DIR)/options.o \
+		 	$(OBJ_DIR)/utilitarian.o $(OBJ_DIR)/optionhandling.o \
+		 	$(OBJ_DIR)/filehandling.o $(OBJ_DIR)/archivehandling.o \
+		 	$(OBJ_DIR)/errors.o
 
 # Compiler and compilation's options
 CC = gcc
