@@ -2,10 +2,10 @@
 #include <string.h>
 
 #include "../head/archivehandling.h"
+#include "../head/errors.h"
+#include "../head/options.h"
 #include "../head/ustarheader.h"
 #include "../head/utilitarian.h"
-#include "../head/options.h"
-#include "../head/errors.h"
 
 void list_files_from_archive(char* archive_path) {
 	errno = 0;

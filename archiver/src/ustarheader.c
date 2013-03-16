@@ -1,11 +1,11 @@
-#include <errno.h>
 #include <sys/stat.h>
 #include <string.h>
+#include <errno.h>
 
-#include "../head/ustarheader.h"
-#include "../head/filehandling.h"
-#include "../head/utilitarian.h"
 #include "../head/errors.h"
+#include "../head/filehandling.h"
+#include "../head/ustarheader.h"
+#include "../head/utilitarian.h"
 
 // Prototypes of private functions
 void clean_up_header(FILE_HEADER* header);

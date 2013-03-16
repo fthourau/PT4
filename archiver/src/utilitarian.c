@@ -1,6 +1,6 @@
-#include "../head/utilitarian.h"
-
 #include <stdlib.h>
+#include <stdio.h>
+#include <stdbool.h>
 #include <math.h>
 #include <string.h>
 #include <time.h>
@@ -130,7 +130,7 @@ char* get_weight(unsigned long long int weight) {
 		strcat(size, "G");
 	else
 		strcat(size, "o");
-	
+
 	return size;
 }
 

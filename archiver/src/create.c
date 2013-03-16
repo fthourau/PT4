@@ -2,10 +2,10 @@
 #include <malloc.h>
 #include <errno.h>
 
-#include "../head/options.h"
-#include "../head/errors.h"
-#include "../head/ustarheader.h"
 #include "../head/archivehandling.h"
+#include "../head/errors.h"
+#include "../head/options.h"
+#include "../head/ustarheader.h"
 #include "../head/utilitarian.h"
 
 void create_archive_from_files(int number_of_arguments, char** files) {

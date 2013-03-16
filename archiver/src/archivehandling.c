@@ -2,9 +2,9 @@
 #include <string.h>
 #include <malloc.h>
 
-#include "../head/ustarheader.h"
 #include "../head/archivehandling.h"
 #include "../head/filehandling.h"
+#include "../head/ustarheader.h"
 #include "../head/utilitarian.h"
 
 // This function calculates the number of 512 bytes block according to the

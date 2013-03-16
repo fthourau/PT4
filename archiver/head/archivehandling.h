@@ -13,4 +13,4 @@ void complete_current_block(unsigned int from, unsigned int to, FILE* file);
 void write_null_block(FILE* archive);
 void erase_ending_null_block(FILE* archive, char* archivename);
 
-#endif
+#endif /* ARCHIVEHANDLING_H */

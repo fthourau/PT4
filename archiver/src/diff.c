@@ -1,12 +1,12 @@
-#include <errno.h>
 #include <string.h>
 #include <stdlib.h>
+#include <errno.h>
 
-#include "../head/options.h"
-#include "../head/errors.h"
-#include "../head/filehandling.h"
-#include "../head/extract.h"
 #include "../head/archivehandling.h"
+#include "../head/errors.h"
+#include "../head/extract.h"
+#include "../head/filehandling.h"
+#include "../head/options.h"
 
 void diff_command(int number_of_argument, char** files) {
 	FILE* archive;

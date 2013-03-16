@@ -3,4 +3,4 @@
 
 void diff_command(int number_of_argument, char** files);
 
-#endif
+#endif /* DIFF_H */

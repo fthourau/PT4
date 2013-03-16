@@ -1,15 +1,14 @@
-#include <stdbool.h>
 #include <string.h>
 #include <malloc.h>
 #include <errno.h>
 
-#include "../head/add.h"
-#include "../head/ustarheader.h"
 #include "../head/archivehandling.h"
-#include "../head/options.h"
 #include "../head/errors.h"
+#include "../head/options.h"
+#include "../head/ustarheader.h"
 #include "../head/utilitarian.h"
 
+void add_file(FILE_HEADER* header, FILE* file, FILE* archive);
 bool confirmation_of_adding(char* filename);
 
 void add_files_to_archive(int number_of_argument, char** files) {

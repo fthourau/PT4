@@ -1,5 +1,3 @@
-#include "../head/errors.h"
-
 const char ARCHIVE_ARG_MISSING_ERR[100] = {"Argument manquant: <archive>\0"};
 const char FILE_ARG_MISSING_ERR[100] = {"Argument manquant: <fichier(s)>\0"};
 const char ALL_ARG_MISSING_ERR[100] = {

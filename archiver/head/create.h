@@ -3,4 +3,4 @@
 
 void create_archive_from_files(int number_of_arguments, char** files);
 
-#endif
+#endif /* ARCHIVE_H */

@@ -2,14 +2,14 @@
 #include <string.h>
 #include <errno.h>
 
-#include "../head/delete.h"
-#include "../head/ustarheader.h"
-#include "../head/filehandling.h"
 #include "../head/archivehandling.h"
-#include "../head/options.h"
 #include "../head/errors.h"
+#include "../head/filehandling.h"
+#include "../head/options.h"
+#include "../head/ustarheader.h"
 #include "../head/utilitarian.h"
 
+void delete_file(int file_position, FILE* archive, char* archive_name);
 void rename_temporary_archive(char* archive_name);
 
 void delete_files_from_archive(int number_of_argument, char** files) {

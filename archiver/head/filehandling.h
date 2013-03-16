@@ -16,4 +16,4 @@ void get_device_numbers(char* devmajor, char* devminor, dev_t devnumber);
 // The function fulfills the string empty space with NULL-terminated character
 void fulfill_empty_space(char* string, int starting_point, int length);
 
-#endif
+#endif /* FILEHANDLING_H */

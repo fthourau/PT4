@@ -1,16 +1,15 @@
-#include <stdbool.h>
 #include <stdlib.h>
 #include <malloc.h>
 #include <string.h>
 #include <errno.h>
 
-#include "../head/delete.h"
 #include "../head/add.h"
 #include "../head/archivehandling.h"
-#include "../head/filehandling.h"
-#include "../head/ustarheader.h"
-#include "../head/options.h"
+#include "../head/delete.h"
 #include "../head/errors.h"
+#include "../head/filehandling.h"
+#include "../head/options.h"
+#include "../head/ustarheader.h"
 
 void update_files_from_archive(int number_of_argument, char** files) {
 	int i = first_argument_position;

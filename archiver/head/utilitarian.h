@@ -20,4 +20,4 @@ bool is_gzip_format(char* archive_to_check);
 void compress_with_gzip(char* filename);
 void decompress_with_gzip(char* filename);
 
-#endif
+#endif /* UTILITARIAN_H */

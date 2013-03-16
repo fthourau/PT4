@@ -53,4 +53,4 @@ void calculate_checksum(FILE_HEADER* header);
 void printf_header(FILE_HEADER* header);
 void printf_header_info(FILE_HEADER* header);
 
-#endif
+#endif /* USTARHEADER_H */

@@ -24,4 +24,4 @@ extern const char OVERRIDE_LIMIT_ERR[100];
 // Error messages about update
 extern const char UPDATE_ERR[100];
 
-#endif
+#endif /* ERRORS_H */

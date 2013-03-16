@@ -7,8 +7,8 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include "../head/options.h"
 #include "../head/errors.h"
+#include "../head/options.h"
 #include "../head/ustarheader.h"
 #include "../head/utilitarian.h"
 

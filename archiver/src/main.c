@@ -1,18 +1,17 @@
 #include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
 
-#include "../head/create.h"
 #include "../head/add.h"
+#include "../head/create.h"
 #include "../head/delete.h"
-#include "../head/list.h"
-#include "../head/extract.h"
-#include "../head/update.h"
 #include "../head/diff.h"
-#include "../head/optionhandling.h"
-#include "../head/filehandling.h"
-#include "../head/options.h"
 #include "../head/errors.h"
+#include "../head/extract.h"
+#include "../head/filehandling.h"
+#include "../head/list.h"
+#include "../head/optionhandling.h"
+#include "../head/options.h"
+#include "../head/update.h"
 #include "../head/utilitarian.h"
 
 static bool MARKED_FOR_DELETION = false;

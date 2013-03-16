@@ -3,8 +3,8 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <linux/kdev_t.h>
+#include <sys/types.h>
 
-#include "../head/filehandling.h"
 #include "../head/utilitarian.h"
 #include "../head/ustarheader.h"
 

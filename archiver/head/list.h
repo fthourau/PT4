@@ -3,4 +3,4 @@
 
 void list_files_from_archive(char* archive_path);
 
-#endif
+#endif /* LIST_H */

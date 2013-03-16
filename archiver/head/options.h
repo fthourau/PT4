@@ -31,4 +31,4 @@ extern bool MAKE_ARCHIVE_FLAG;
 extern bool COMPRESS_FLAG;
 extern bool SPARSE_FLAG;
 
-#endif
+#endif /* OPTIONS_H */
