@@ -2,10 +2,12 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "../head/archive.h"
+#include "../head/create.h"
+#include "../head/add.h"
 #include "../head/delete.h"
 #include "../head/list.h"
-#include "../head/extraction.h"
+#include "../head/extract.h"
+#include "../head/update.h"
 #include "../head/diff.h"
 #include "../head/optionhandling.h"
 #include "../head/filehandling.h"
@@ -33,7 +35,7 @@ int main(int argc, char** argv) {
 		switch(CURRENT_ACTION) {
 			case CREATE:
 				if(argc > 3)
-					build_or_add_archive_from_files(argc, argv);
+					create_archive_from_files(argc, argv);
 				else if(argc == 3)
 					fprintf(stderr, "%s\n", FILE_ARG_MISSING_ERR);
 				else
@@ -47,7 +49,7 @@ int main(int argc, char** argv) {
 			break;
 			case ADD:
 				if(argc > 3)
-					build_or_add_archive_from_files(argc, argv);
+					add_files_to_archive(argc, argv);
 				else if(argc == 3)
 					fprintf(stderr, "%s\n", FILE_ARG_MISSING_ERR);
 				else

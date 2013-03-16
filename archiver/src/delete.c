@@ -2,6 +2,7 @@
 #include <string.h>
 #include <errno.h>
 
+#include "../head/delete.h"
 #include "../head/ustarheader.h"
 #include "../head/filehandling.h"
 #include "../head/archivehandling.h"
@@ -9,11 +10,13 @@
 #include "../head/errors.h"
 #include "../head/utilitarian.h"
 
+void rename_temporary_archive(char* archive_name);
+
 void delete_files_from_archive(int number_of_argument, char** files) {
 	int i = first_argument_position + 1;
 
 	if(VERBOSE_FLAG)
-		printf("Suppression de fichier(s) à l'archive '%s' an cours...\n", 
+		printf("Suppression de fichier(s) à l'archive '%s' en cours...\n", 
 											files[first_argument_position]);
 
 	do {
@@ -30,49 +33,14 @@ void delete_files_from_archive(int number_of_argument, char** files) {
 			int file_position = file_is_present(filename, prefix, archive);
 
 			if(file_position != -1) {
-				FILE_HEADER header;
-				FILE* new_archive = fopen("archive.tmp", "w");
-				size_t archive_size = get_file_weight(archive);
-				char* buffer = malloc(archive_size);
-				memset(buffer, 0, archive_size);
-				
-				char* rename_command = malloc(130);
-				strcat(rename_command, "mv archive.tmp ");
-				strcat(rename_command, files[first_argument_position]);
+				delete_file(file_position, archive, 
+											files[first_argument_position]);
 
-				if(file_position != 0) {
-					fread(buffer, file_position, 1, archive);
-					fwrite(buffer, file_position, 1, new_archive);
-				}
-				
-				build_ustar_header_from_archive(&header, archive);
-
-				size_t filesize = oct2dec(header.size);
-				int number_of_block = calculate_number_of_block(filesize);
-				int size_skipped = BLOCK_SIZE * number_of_block;
-
-				fseek(archive, size_skipped, SEEK_CUR);
-				memset(buffer, 0, sizeof(*buffer));
-
-				int remaining_size = archive_size - ftell(archive);
-
-				fread(buffer, remaining_size, 1, archive);
-				fwrite(buffer, remaining_size, 1, new_archive);
-
-				fclose(new_archive);
 				fclose(archive);
-				new_archive = NULL;
 				archive = NULL;
 
-				system(rename_command);
-
 				if(VERBOSE_FLAG)
-					printf("===> '%s' supprimé de l'archive.\n", files[i]);
-
-				free(buffer);
-				free(rename_command);
-				buffer = NULL;
-				rename_command = NULL;
+					printf("'%s' supprimé de l'archive.\n", files[i]);
 			}
 			else
 				fprintf(stderr, "%s: %s\n", FILE_NOT_FOUND_ERR, files[i]);
@@ -93,4 +61,55 @@ void delete_files_from_archive(int number_of_argument, char** files) {
 			archive = NULL;
 		}
 	} while(i < number_of_argument);
+}
+
+void delete_file(int file_position, FILE* archive, char* archive_name) {
+	FILE_HEADER header;
+	FILE* new_archive = fopen("archive.tmp", "w");
+	size_t archive_size = get_file_weight(archive);
+	char* buffer = malloc(archive_size);
+	memset(buffer, 0, archive_size);
+
+	if(file_position != 0) {
+		fread(buffer, file_position, 1, archive);
+		fwrite(buffer, file_position, 1, new_archive);
+	}
+	
+	build_ustar_header_from_archive(&header, archive);
+
+	size_t filesize = oct2dec(header.size);
+	int number_of_block = calculate_number_of_block(filesize);
+	int size_skipped = BLOCK_SIZE * number_of_block;
+
+	fseek(archive, size_skipped, SEEK_CUR);
+	memset(buffer, 0, sizeof(*buffer));
+
+	int remaining_size = archive_size - ftell(archive);
+
+	fread(buffer, remaining_size, 1, archive);
+	fwrite(buffer, remaining_size, 1, new_archive);
+
+	free(buffer);
+	buffer = NULL;
+
+	fclose(new_archive);
+	fclose(archive);
+	new_archive = NULL;
+	archive = NULL;
+
+	rename_temporary_archive(archive_name);
+
+	archive = fopen(archive_name, "r+");
+}
+
+void rename_temporary_archive(char* archive_name) {
+	char* rename_command = malloc(130);
+	memset(rename_command, 0, 130);
+	strcat(rename_command, "mv archive.tmp ");
+	strcat(rename_command, archive_name);
+	
+	system(rename_command);
+
+	free(rename_command);
+	rename_command = NULL;
 }

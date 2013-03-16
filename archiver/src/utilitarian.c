@@ -130,16 +130,7 @@ char* get_weight(unsigned long long int weight) {
 		strcat(size, "G");
 	else
 		strcat(size, "o");
-
-	// if(weight < 1000)
-		// strcat(size, " ");
 	
-	// if(weight < 100)
-		// strcat(size, " ");
-
-	// if(weight < 10)
-		// strcat(size, " ");
-
 	return size;
 }
 

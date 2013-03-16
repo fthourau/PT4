@@ -200,7 +200,8 @@ void get_size(char* filesize, off_t size) {
 	char buffer[SIZE_S];
 	int i = 0;
 	
-	fulfill_empty_space(buffer, 0, SIZE_S);
+	// fulfill_empty_space(buffer, 0, SIZE_S);
+	memset(buffer, 0, SIZE_S);
 
 	sprintf(filesize, "%ld", size);
 	sprintf(buffer, "%lld", dec2oct(filesize));
@@ -222,7 +223,8 @@ void get_modification_time(char* header_mtime, time_t mtime) {
 	char buffer[MTIME_S];
 	int i = 0;
 
-	fulfill_empty_space(buffer, 0, MTIME_S);
+	// fulfill_empty_space(buffer, 0, MTIME_S);
+	memset(buffer, 0, MTIME_S);
 
 	sprintf(header_mtime, "%ld", mtime);
 	sprintf(buffer, "%lld", dec2oct(header_mtime));
@@ -278,88 +280,6 @@ void get_device_numbers(char* devmajor, char* devminor, dev_t devnumber) {
 	sprintf(buff, "%lu", MINOR(devnumber));
 	sprintf(devminor, "%lld", dec2oct(buff));
 }
-
-/*void calculate_checksum(FILE_HEADER* header) {
-	int sum = 0;
-	char buffer[8];
-
-	int unit[15] = {
-		NAME_S, MODE_S, UID_S, GID_S, SIZE_S, MTIME_S, TYPEFLAG_S, LINKNAME_S,
-		MAGIC_S, VERSION_S, UNAME_S, GNAME_S, DEVMAJOR_S, DEVMINOR_S, PREFIX_S
-	};
-
-	int i;
-	int j = -1;
-
-loop:
-	i = 0;
-	j++;
-
-	while(i < unit[j]) {
-		switch(j) {
-			case 0:
-				sum += (int)header->name[i++];
-			break;
-			case 1:
-				sum += (int)header->mode[i++];
-			break;
-			case 2:
-				sum += (int)header->uid[i++];
-			break;
-			case 3:
-				sum += (int)header->gid[i++];
-			break;
-			case 4:
-				sum += (int)header->size[i++];
-			break;
-			case 5:
-				sum += (int)header->mtime[i++];
-			break;
-			case 6:
-				sum += (int)header->typeflag[i++];
-			break;
-			case 7:
-				sum += (int)header->linkname[i++];
-			break;
-			case 8:
-				sum += (int)header->magic[i++];
-			break;
-			case 9:
-				sum += (int)header->version[i++];
-			break;
-			case 10:
-				sum += (int)header->uname[i++];
-			break;
-			case 11:
-				sum += (int)header->gname[i++];
-			break;
-			case 12:
-				sum += (int)header->devmajor[i++];
-			break;
-			case 13:
-				sum += (int)header->devminor[i++];
-			break;
-			case 14:
-				sum += (int)header->prefix[i++];
-			break;
-		}
-	}
-		
-	if(j != 14)
-		goto loop;
-
-	sprintf(buffer, "%d", sum);
-	sprintf(buffer, "%lld", dec2oct(buffer));
-
-	header->cksum[0] = '0';
-	header->cksum[1] = buffer[0];
-	header->cksum[2] = buffer[1];
-	header->cksum[3] = buffer[2];
-	header->cksum[4] = buffer[3];
-	header->cksum[5] = buffer[4];
-	header->cksum[6] = '\0';
-	header->cksum[7] = ' ';
-}*/
 
 void fulfill_empty_space(char* string, int starting_point, int length) {
 	int i;

@@ -21,4 +21,7 @@ extern const char TMP_FILE_OPENING_ERR[100];
 // Error messages about extraction
 extern const char OVERRIDE_LIMIT_ERR[100];
 
+// Error messages about update
+extern const char UPDATE_ERR[100];
+
 #endif

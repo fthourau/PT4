@@ -1,4 +1,6 @@
+#include <stdlib.h>
 #include <string.h>
+#include <malloc.h>
 
 #include "../head/ustarheader.h"
 #include "../head/archivehandling.h"
@@ -76,4 +78,52 @@ unsigned int number_of_file_in_archive(FILE* archive) {
 	rewind(archive);
 
 	return number_of_file;
+}
+
+void complete_current_block(unsigned int from, unsigned int to, FILE* file) {
+	unsigned int missing_size = to - from;
+	char* block = malloc(missing_size);
+	memset(block, 0, missing_size);
+	fwrite(block, missing_size, 1, file);
+
+	free(block);
+	block = NULL;
+}
+
+void write_null_block(FILE* archive) {
+	char* null_block = malloc(BLOCK_SIZE);
+	memset(null_block, 0, BLOCK_SIZE);
+	fwrite(null_block, BLOCK_SIZE, 1, archive);
+	
+	free(null_block);
+	null_block = NULL;
+}
+
+void erase_ending_null_block(FILE* archive, char* archivename) {
+	int archivesize = get_file_weight(archive);
+	archivesize -= BLOCK_SIZE;
+	char* buffer = malloc(archivesize);
+	memset(buffer, 0, archivesize);
+	fread(buffer, archivesize, 1, archive);
+
+	fclose(archive);
+	archive = NULL;
+
+	char* commandline = malloc(256);
+	memset(commandline, 0, 256);
+	strcat(commandline, "rm -rf ");
+	strcat(commandline, archivename);
+	system(commandline);
+
+	free(commandline);
+	commandline = NULL;
+
+	archive = fopen(archivename, "a");
+
+	if(archive != NULL) {
+		fwrite(buffer, archivesize, 1, archive);
+	}
+
+	free(buffer);
+	buffer = NULL;
 }

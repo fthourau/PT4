@@ -5,7 +5,7 @@
 #include "../head/options.h"
 #include "../head/errors.h"
 #include "../head/filehandling.h"
-#include "../head/extraction.h"
+#include "../head/extract.h"
 #include "../head/archivehandling.h"
 
 void diff_command(int number_of_argument, char** files) {

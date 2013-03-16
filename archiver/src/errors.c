@@ -14,11 +14,14 @@ const char UNKNOWN_OPTION_ERR[100] = {
 const char INVALID_OPTION_COMBINATION_ERR[100] = {
 										"Combinaison d'option invalide\0"};
 
-const char OPENING_ERR[100] = {"Erreur d'ouverture\0"};
+const char OPENING_ERR[100] = {"Erreur d'ouverture du fichier\0"};
 const char INVALID_FILE_ERR[100] = {"Fichier invalide\0"};
 const char FILE_NOT_FOUND_ERR[100] = {"Fichier absent de l'archive\0"};
 const char STAT_FAILURE_ERR[100] = {"Echec de 'stat()' sur le fichier\0"};
 const char TMP_FILE_OPENING_ERR[100] = {
 							"Echec de la création du fichier temporaire\0"};
+
 const char OVERRIDE_LIMIT_ERR[100] = {
-			"[Erreur interne] La taille de sortie ne doit pas excéder la taille d'entrée\0"};
+	"[ERREUR] La taille de sortie ne doit pas excéder la taille d'entrée\0"};
+
+const char UPDATE_ERR[100] = {"Echec de l'update sur le fichier\0"};
