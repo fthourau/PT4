@@ -50,12 +50,12 @@ void delete_files_from_archive(int number_of_argument, char** files) {
 			filename = NULL;
 			prefix = NULL;
 
-			i++;
 		}
 		else
 			fprintf(stderr, "%s '%s': %s\n", INVALID_FILE_ERR,
 							files[first_argument_position], strerror(errno));
 
+			i++;
 		if(archive != NULL) {
 			fclose(archive);
 			archive = NULL;

@@ -53,7 +53,7 @@ void create_archive_from_files(int number_of_arguments, char** files) {
 		}
 		else {
 			printf_header(&header);
-			printf("%.*s\n", filesize, buffer);
+			printf("%.*s\n", (int)filesize, buffer);
 		}
 
 		free(buffer);

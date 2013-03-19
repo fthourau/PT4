@@ -12,3 +12,5 @@ bool VERBOSE_FLAG = false;
 bool MAKE_ARCHIVE_FLAG = false;
 bool COMPRESS_FLAG = false;
 bool SPARSE_FLAG = false;
+
+int SPARSE_ACCURACY = 20;

@@ -10,9 +10,10 @@ TST_DIR = test
 OBJECTS = $(OBJ_DIR)/main.o $(OBJ_DIR)/ustarheader.o $(OBJ_DIR)/create.o \
 			$(OBJ_DIR)/extract.o  $(OBJ_DIR)/add.o $(OBJ_DIR)/delete.o \
 			$(OBJ_DIR)/update.o $(OBJ_DIR)/list.o $(OBJ_DIR)/diff.o \
-		 	$(OBJ_DIR)/options.o $(OBJ_DIR)/utilitarian.o \
-		 	$(OBJ_DIR)/optionhandling.o $(OBJ_DIR)/filehandling.o \
-		 	$(OBJ_DIR)/archivehandling.o $(OBJ_DIR)/errors.o
+		 	$(OBJ_DIR)/sparse.o $(OBJ_DIR)/options.o \
+		 	$(OBJ_DIR)/utilitarian.o $(OBJ_DIR)/optionhandling.o \
+		 	$(OBJ_DIR)/filehandling.o $(OBJ_DIR)/archivehandling.o \
+		 	$(OBJ_DIR)/errors.o $(OBJ_DIR)/test.o
 
 # Compiler and compilation's options
 CC = gcc
@@ -24,7 +25,6 @@ LDLIBS = -lm
 
 # Program's name
 CMD_NAME = tar
-TST_NAME = tarTest
 
 all: $(OBJECTS)
 		$(CC) $(CNORM) $^ $(LDLIBS) -o $(CMD_NAME) $(CFLAGS)
@@ -44,4 +44,4 @@ proper: clean
 rebuild: proper all
 
 test:
-		./$(TST_DIR)/$(TST_NAME)
+		./$(CMD_NAME) test

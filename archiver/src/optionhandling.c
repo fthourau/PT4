@@ -17,25 +17,25 @@ void get_options(int argc, char **argv) {
 	while (1) {
 		static struct option long_options[] =
 		{
-			{"create",  no_argument, 0, 'c'},
-			{"list", no_argument, 0, 't'},
-			{"add",     no_argument, 0, 'r'},
-			{"update",  no_argument, 0, 'u'},
-			{"extract", no_argument, 0, 'x'},
-			{"delete",  no_argument, 0, 'd'},
-			{"help",  no_argument, 0, 'h'},
-			{"verbose",  no_argument, 0, 'v'},
-			{"file",    no_argument, 0, 'f'},
-			{"compress",    no_argument, 0, 'z'},
-			{"sparse", no_argument, 0, 's'},
-			{"diff", no_argument, 0, 'm'},
+			{"create",  	no_argument, 0, 'c'},
+			{"list", 		no_argument, 0, 't'},
+			{"add",     	no_argument, 0, 'r'},
+			{"update",  	no_argument, 0, 'u'},
+			{"extract", 	no_argument, 0, 'x'},
+			{"delete",  	no_argument, 0, 'd'},
+			{"help",  		no_argument, 0, 'h'},
+			{"verbose",  	no_argument, 0, 'v'},
+			{"file", 		no_argument, 0, 'f'},
+			{"compress", 	no_argument, 0, 'z'},
+			{"sparse", 		no_argument, 0, 's'},
+			{"diff", 		no_argument, 0, 'm'},
 
 			{0, 0, 0, 0}
 		};
 		/* getopt_long stock l'index de l'option ici */
 		int option_index = 0;
 		
-		c = getopt_long(argc, argv, "hvfzsmctruxd", long_options, 
+		c = getopt_long(argc, argv, "hvfzs:mctruxd", long_options, 
 															&option_index);
 
 		/* Detecte la fin des options */

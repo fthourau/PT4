@@ -31,4 +31,7 @@ extern bool MAKE_ARCHIVE_FLAG;
 extern bool COMPRESS_FLAG;
 extern bool SPARSE_FLAG;
 
+// Option's argument
+extern int SPARSE_ACCURACY;
+
 #endif /* OPTIONS_H */

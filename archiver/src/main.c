@@ -11,6 +11,7 @@
 #include "../head/list.h"
 #include "../head/optionhandling.h"
 #include "../head/options.h"
+#include "../head/test.h"
 #include "../head/update.h"
 #include "../head/utilitarian.h"
 
@@ -20,6 +21,9 @@ void uncompress_and_change_path(char** files);
 void delete_temporary_file(char* file);
 
 int main(int argc, char** argv) {
+	if(strcmp(argv[1], "test") == 0)
+		test();
+
 	if(argc > 1) {
 		get_options(argc, argv);
 
